@@ -1,7 +1,20 @@
 
 ## Tools Setup
 
-This page contains instructions on how to setup your local development environment with the IDEs and tools needed to interact with the data stores and data workloads discussed during the course
+This page contains instructions on how to setup your local development environment with the IDEs and tools needed to interact with the data stores and data workloads discussed during the course. We will be using the instructions here to set up the following resources.
+
+- Git
+- Azure CLI
+- VS Code
+- Intellij IDEA
+- Docker
+- Postman REST Client
+- Kubectl
+- Helm 3
+- Java SDK 11 (OpenJDK)
+- Scala 2.12.12
+- Spark 3.0.1 (with Hadoop 3.2 or later)
+- Maven 3.6.3 or later
 
 
 ### Git
@@ -40,6 +53,7 @@ Please visit the [Postman REST client home page](https://www.postman.com/product
 ### Kubectl
 Kubectl (pronounced Cube Control) allows us to interact with Kubernetes resources in the remote cluster. 
 We can install the tool directly from [this page](https://kubernetes.io/docs/tasks/tools/install-kubectl/) or we can use the Azure CLI to [install the latest CLI version](https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az_aks_install_cli) 
+
 ### Helm 3
 Helm simplies the management of Kubernetes resources by grouping the installation, modification and removal of related Kubernetes resources in packages referred to as Charts.
 We will be using Helm in the course and you can install it and add it to your Path by following the directions [here](https://helm.sh/docs/intro/install/)
