@@ -79,6 +79,22 @@ kubectl -n {namespace} logs deploy/{deployment name}
 
 In the following sections, we are going to walk through how to set up the data stores and data workloads
 
+### Setting up MySQL Datastores
+
+Use the following commands to install/uninstall MySQL 5.6, 5.7 or 8.0 respectively.
+
+```shell
+
+helm upgrade --install mysql56 ./MySQL5.6
+helm uninstall mysql56
+
+helm upgrade --install mysql57 ./MySQL5.7
+helm uninstall mysql57
+
+helm upgrade --install mysql80 ./MySQL8.0
+helm uninstall mysql80
+```
+
 ### Setting up Cassandra
 
 These commands demonstrates how to set up and remove the Cassandra cluster
