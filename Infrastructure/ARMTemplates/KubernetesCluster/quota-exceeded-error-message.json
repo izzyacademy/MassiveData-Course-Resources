@@ -1,0 +1,10 @@
+{
+  "code": "DeploymentFailed",
+  "message": "At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/DeployOperations for usage details.",
+  "details": [
+    {
+      "code": "QuotaExceeded",
+      "message": "Provisioning of resource(s) for container service z2practice in resource group ZPractice failed. Message: Operation could not be completed as it results in exceeding approved Total Regional Cores quota. Additional details - Deployment Model: Resource Manager, Location: westus, Current Limit: 4, Current Usage: 0, Additional Required: 28, (Minimum) New Limit Required: 28. Submit a request for Quota increase at https://aka.ms/ProdportalCRP/?#create/Microsoft.Support/Parameters/%7B%22subId%22:%2266e229ab-9784-497b-a51a-809b178a5c13%22,%22pesId%22:%2206bfd9d3-516b-d5c6-5802-169c800dec89%22,%22supportTopicId%22:%22e12e3d1d-7fa0-af33-c6d0-3c50df9658a3%22%7D by specifying parameters listed in the ‘Details’ section for deployment to succeed. Please read more about quota limits at https://docs.microsoft.com/en-us/azure/azure-supportability/regional-quota-requests.. Details: "
+    }
+  ]
+}
