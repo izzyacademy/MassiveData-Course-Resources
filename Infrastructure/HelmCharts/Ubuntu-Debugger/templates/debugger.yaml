@@ -1,0 +1,54 @@
+{{- if .Values.debugger.enabled }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: debugger
+  namespace: "{{ .Values.infrastructure.namespace }}"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: debugger
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: debugger
+    spec:
+      containers:
+      - image: "izzyacademy/ubuntu-debugger:18.04"
+        name: ubuntu
+        command: # Sleep for 48 hours
+          - "sleep"
+          - "48h"
+        resources:
+          requests:
+            memory: "1024Mi"
+            cpu: "750m"
+          limits:
+            memory: "5120Mi"
+            cpu: "1000m"
+        volumeMounts:
+        - name: "debugger-volume"
+          mountPath: /home # used for persisting downloads and other things in the container
+      volumes:
+      - name: "debugger-volume"
+        persistentVolumeClaim:
+          claimName: "debugger-persistent-storage"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "debugger-persistent-storage"
+  namespace: "{{ .Values.infrastructure.namespace }}"
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: {{ .Values.infrastructure.storageClass }}
+  resources:
+    requests:
+      storage: 10Gi
+
+{{- end }}

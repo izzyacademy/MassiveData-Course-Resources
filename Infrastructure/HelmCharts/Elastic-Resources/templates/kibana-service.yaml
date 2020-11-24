@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "kibana-external"
+spec:
+  type: "{{ .Values.service.type }}"
+  ports:
+  - port: {{ .Values.service.kibanaPort }}
+    protocol: TCP
+  selector:
+    kibana.k8s.elastic.co/name: quickstart
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "kibana-internal"
+  annotations:
+        service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  type: "{{ .Values.service.type }}"
+  ports:
+  - port: {{ .Values.service.kibanaPort }}
+    protocol: TCP
+  selector:
+    kibana.k8s.elastic.co/name: quickstart

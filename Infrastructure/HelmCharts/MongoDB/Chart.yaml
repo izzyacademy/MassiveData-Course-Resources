@@ -1,0 +1,11 @@
+apiVersion: v2
+
+name: MongoDB
+
+description: A Helm chart for deploying a single node MongoDB  server
+
+type: application
+
+version: 3.0
+
+appVersion: 4.4.1

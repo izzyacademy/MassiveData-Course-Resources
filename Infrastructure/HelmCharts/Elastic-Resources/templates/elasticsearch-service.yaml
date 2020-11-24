@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "elasticsearch-external"
+spec:
+  type: "{{ .Values.service.type }}"
+  ports:
+  - port: {{ .Values.service.elasticSearchPort }}
+    protocol: TCP
+  selector:
+    elasticsearch.k8s.elastic.co/cluster-name: quickstart
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "elasticsearch-internal"
+  annotations:
+        service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  type: "{{ .Values.service.type }}"
+  ports:
+  - port: {{ .Values.service.elasticSearchPort }}
+    protocol: TCP
+  selector:
+    celasticsearch.k8s.elastic.co/cluster-name: quickstart

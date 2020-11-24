@@ -1,0 +1,19 @@
+---
+infrastructure:
+  namespace: "cassandra"
+  storageClass: "managed-premium"
+  image: "cassandra:3.11.8"
+  cluster: "izzyacademy"
+  datacenter: "kubernetes"
+
+# How to Install/Uninstall
+# helm upgrade --install cassandra ./Cassandra --set cassandra.enabled=true
+# helm uninstall cassandra
+cassandra:
+  enabled: true
+  failureThreshold: 1
+  listenAddress: "0.0.0.0"
+  rpcAddress: "0.0.0.0"
+  startRpc: "true"
+  heapSize: "3096M"
+  seeds: "cassandra1-external,cassandra2-external,cassandra3-external"

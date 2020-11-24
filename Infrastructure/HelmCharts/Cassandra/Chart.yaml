@@ -1,0 +1,13 @@
+---
+
+apiVersion: v2
+
+name: Cassandra
+
+description: A Helm chart for deploying a Cassandra Cluster
+
+type: application
+
+version: 4.0
+
+appVersion: 4.4.1

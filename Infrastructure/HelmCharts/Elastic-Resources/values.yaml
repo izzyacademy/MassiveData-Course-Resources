@@ -1,0 +1,15 @@
+
+replicaCount: 1
+
+application:
+  labelValue: elasticsearch
+
+infrastructure:
+  namespace: elastic-system
+  appName: elasticsearch
+
+service:
+  type: LoadBalancer
+  elasticSearchPort: 9200
+  kibanaPort: 5601
+  protocol: TCP

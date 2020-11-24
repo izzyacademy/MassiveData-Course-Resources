@@ -1,0 +1,10 @@
+apiVersion: v2
+
+name: Ubuntu Debugger
+
+description: A Helm chart for deploying an Ubuntu 18 container used for debugging
+type: application
+
+version: 18.04
+
+appVersion: 2.0

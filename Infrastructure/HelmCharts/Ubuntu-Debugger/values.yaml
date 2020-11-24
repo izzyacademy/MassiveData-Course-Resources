@@ -1,0 +1,8 @@
+
+infrastructure:
+  namespace: "debugger"
+  storageClass: "managed-premium"
+
+# helm upgrade --install ubuntu-debugger ./Ubuntu-Debugger --set debugger.enabled=true
+debugger:
+  enabled: false

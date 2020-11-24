@@ -1,0 +1,11 @@
+apiVersion: v2
+
+name: MySQL 8.0
+
+description: A Helm chart for deploying a single node MySQL 8.0 database server
+
+type: application
+
+version: 2.0
+
+appVersion: 8.0.22

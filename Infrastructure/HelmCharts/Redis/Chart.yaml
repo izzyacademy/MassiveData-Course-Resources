@@ -1,0 +1,11 @@
+apiVersion: v2
+
+name: RedisLabs
+
+description: A Helm chart for deploying a single node Redis server
+
+type: application
+
+version: 3.1
+
+appVersion: 6.0.8

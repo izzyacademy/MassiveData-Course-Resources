@@ -1,0 +1,31 @@
+
+replicaCount: 1
+
+application:
+  labelValue: redis
+
+infrastructure:
+  namespace: redis
+  appName: redis
+
+image:
+  name: redis
+  pullPolicy: IfNotPresent
+  tag: "6.0.8-buster"
+
+service:
+  type: LoadBalancer
+  port: 6379
+  protocol: TCP
+
+resources:
+  limits:
+     cpu: 1000m
+     memory: 4096Mi
+  requests:
+     cpu: 750m
+     memory: 2048Mi
+  volume:
+    size: 10Gi
+    storageClass: managed-premium
+    path: /data

@@ -1,0 +1,31 @@
+
+replicaCount: 1
+
+application:
+  labelValue: mongo
+
+infrastructure:
+  namespace: mongo
+  appName: mongo
+
+image:
+  name: mongo
+  pullPolicy: IfNotPresent
+  tag: "4.4.1-bionic"
+
+service:
+  type: LoadBalancer
+  port: 27017
+  protocol: TCP
+
+resources:
+  limits:
+     cpu: 1000m
+     memory: 2048Mi
+  requests:
+     cpu: 750m
+     memory: 1024Mi
+  volume:
+    size: 5Gi
+    storageClass: managed-premium
+    path: /data
