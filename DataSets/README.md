@@ -11,3 +11,16 @@
 - https://docs.datastax.com/en/cql-oss/3.3/cql/cql_reference/cqlCreateKeyspace.html
 - https://docs.datastax.com/en/cql-oss/3.3/cql/cql_reference/cqlCreateTable.html
 - https://docs.datastax.com/en/cql-oss/3.3/cql/cql_reference/cqlInsert.html
+
+### ElasticSearch Syntax for Queries
+- https://www.elastic.co/guide/en/elasticsearch/reference/current/search.html
+
+### MongoDB Tutorials
+- https://docs.mongodb.com/manual/tutorial/query-documents/
+
+
+### Neo4j - Getting Started with Cypher
+- https://neo4j.com/developer/cypher/intro-cypher/
+
+### Redis CLI Commands
+- https://redis.io/topics/rediscli
