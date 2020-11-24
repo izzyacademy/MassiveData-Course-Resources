@@ -77,7 +77,11 @@ kubectl -n {namespace} logs deploy/{deployment name}
 ```
 ## Setting up Data Stores and Resources
 
+In the following sections, we are going to walk through how to set up the data stores and data workloads
+
 ### Setting up Cassandra
+
+These commands demonstrates how to set up and remove the Cassandra cluster
 
 ```shell
 # This command installs the 3-node Cassandra Cluster
@@ -85,4 +89,37 @@ helm upgrade --install cassandra ./Cassandra --set cassandra.enabled=true
 
 # This command uninstalls the cassandra resources
 helm uninstall cassandra
+```
+
+### Setting up Kafka Cluster and Ecosystem
+
+```shell
+
+# Run this command to create the namespace for the Kafka ecosystem
+kubectl create ns river
+
+# The following command can be used to install/uninstall the Zookeeper component
+helm upgrade --install river-zookeeper ./Confluent --set zookeeper.enabled=true
+helm uninstall river-zookeeper
+
+# The following command can be used to install/uninstall the Kafka Broker components
+helm upgrade --install river-broker ./Confluent --set broker.enabled=true
+helm uninstall river-broker
+
+# The following command can be used to install/uninstall the Schema registry components
+helm upgrade --install river-registry ./Confluent --set schemaregistry.enabled=true
+helm uninstall river-registry
+
+# The following command can be used to install/uninstall the Kafka Connect components
+helm upgrade --install river-connect ./Confluent --set connect.enabled=true
+helm uninstall river-connect
+
+# The following command can be used to install/uninstall the Kafka Rest Proxy components
+helm upgrade --install river-restproxy ./Confluent --set restproxy.enabled=true
+helm uninstall river-restproxy
+
+# The following command can be used to install/uninstall the KSQL components
+helm upgrade --install river-ksql ./Confluent --set ksqldbserver.enabled=true --set ksqldbcli.enabled=true
+helm uninstall river-ksql
+
 ```
