@@ -76,11 +76,24 @@ kubectl -n {namespace} logs deploy/{deployment name}
 
 ```
 ## Setting up Data Stores and Resources
-
 In the following sections, we are going to walk through how to set up the data stores and data workloads
 
-### Setting up MySQL Datastores
+## Setting up the Ubuntu Debugger Container
 
+This is one of the containers we will use to debug the status of other resources within the environment.
+The following commands can be used to setup and remove the debugger container 
+
+```shell
+
+# We will use this container to connect to other containers in our Infrastructure
+helm upgrade --install ubuntu-debugger ./Ubuntu-Debugger --set debugger.enabled=true
+
+This command can be used to uninstall the debugger container
+helm uninstall ubuntu-debugger
+
+```
+
+### Setting up MySQL Datastores
 Use the following commands to install/uninstall MySQL 5.6, 5.7 or 8.0 respectively.
 
 ```shell
@@ -95,6 +108,20 @@ helm upgrade --install mysql80 ./MySQL8.0
 helm uninstall mysql80
 ```
 
+### Setting up PostgreSQL
+
+Use the following commands to install/uninstall PostgreSQL 11 and 13 respectively
+
+```shell
+
+helm upgrade --install postgres116 ./Postgres11.6
+helm uninstall postgres116
+
+helm upgrade --install postgres130 ./Postgres13.0
+helm uninstall postgres130
+
+```
+
 ### Setting up Cassandra
 
 These commands demonstrates how to set up and remove the Cassandra cluster
@@ -106,6 +133,44 @@ helm upgrade --install cassandra ./Cassandra --set cassandra.enabled=true
 # This command uninstalls the cassandra resources
 helm uninstall cassandra
 ```
+
+### Setting up MongoDB
+
+These commands demonstrates how to setup and remove the MongoDB cluster
+
+```shell
+helm upgrade --install mongodb ./MongoDB
+helm uninstall mongodb
+```
+
+### Setting up Redis Key Value Store
+
+```shell
+helm upgrade --install redis ./Redis
+helm uninstall redis
+
+```
+
+### Setting Up the ElasticSearch and Kibana Resources
+
+```shell
+# Install Elastic Search Server
+helm upgrade --install elastic-foundation Elastic-Foundation/
+helm upgrade --install elastic-resources Elastic-Resources/
+
+```
+
+### Setting up Neo4j Graph Store
+
+Run this command to install or uninstall the Neo4j graph store
+
+```shell
+
+helm install neo4j ./Neo4j --set core.standalone=true --set acceptLicenseAgreement=yes --set neo4jPassword=mySecretPassword
+helm uninstall neo4j
+
+```
+
 
 ### Setting up Kafka Cluster and Ecosystem
 
