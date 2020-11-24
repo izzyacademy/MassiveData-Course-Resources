@@ -41,8 +41,40 @@ We are also going to discuss briefly how to perform the following tasks
 - Listing all the secrets within a namespace
 - Listing all the config maps within a namespace
 - Connecting into the default pod within a deployment
-- Getting the logs from the  default pod within a deployment
+- Getting the logs from the default pod within a deployment
 
+
+```shell
+# Use this command to get the list of Kubernetes namespaces on the cluster 
+kubectl get namespaces
+kubectl get ns
+
+# Use this command list all the persistent volumes
+kubectl get pv
+kubectl get persistentvolumes
+
+# Use this command to get the network services within a namespace
+kubectl -n {namespace} get services
+kubectl -n {namespace} get svc
+
+# Use this command to list all the pods within a namespace
+# It also shows you the status and age of each of the pods
+kubectl -n {namespace} get pods
+
+# Use this command to list all the secrets in a namespace 
+kubectl -n {namespace} get secrets
+
+# Use this command to list all the config maps within a namespace
+kubectl -n {namespace} get configmap
+kubectl -n {namespace} get cm
+
+# Use this command to connect to the specific pod within a deployment
+kubectl -n {namespace} exec deploy/{deployment name} -it -- {command}
+
+# Use this command to get logs from a specific pod within a deployment
+kubectl -n {namespace} logs deploy/{deployment name}
+
+```
 ## Setting up Data Stores and Resources
 
 ### Setting up Cassandra
@@ -53,5 +85,4 @@ helm upgrade --install cassandra ./Cassandra --set cassandra.enabled=true
 
 # This command uninstalls the cassandra resources
 helm uninstall cassandra
-
 ```
