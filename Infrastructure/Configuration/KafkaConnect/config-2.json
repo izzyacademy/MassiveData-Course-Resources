@@ -1,0 +1,20 @@
+{
+    "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+    "database.hostname": "52.241.137.96",
+    "database.port": "3306",
+    "database.user": "debezium",
+    "database.password": "db3k4Cc",
+    "database.server.id": "20",
+    "database.server.name": "product-streams",
+    "database.include.list": "ecommerce",
+    "table.include.list" : "ecommerce.products,ecommerce.product_details",
+    "database.history.kafka.bootstrap.servers": "40.81.4.41:9092",
+    "database.history.kafka.topic": "dbhistory.products",
+    "include.schema.changes": "true",
+    "key.converter": "org.apache.kafka.connect.converters.IntegerConverter",
+    "transforms" : "extractKey,extractValue",
+    "transforms.extractKey.type": "org.apache.kafka.connect.transforms.ExtractField$Key",
+    "transforms.extractKey.field": "product_id",
+    "transforms.extractValue.type" : "org.apache.kafka.connect.transforms.ExtractField$Value",
+    "transforms.extractValue.field" : "after"
+}
