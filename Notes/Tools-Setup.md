@@ -1,5 +1,5 @@
 
-## Tools Setup
+## Local Workstation Tools Setup
 
 This page contains instructions on how to setup your local development environment with the IDEs and tools needed to interact with the data stores and data workloads discussed during the course. We will be using the instructions here to set up the following resources.
 
