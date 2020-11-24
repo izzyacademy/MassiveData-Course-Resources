@@ -1,2 +1,3 @@
-# MassiveData-Course-Resources
-Course Resources and Instructions for Setup, Configuration and Deployment
+# Course-Resources
+
+This github repository contains Course Resources and Instructions for Setup, Configuration and Deployment
