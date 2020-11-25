@@ -57,6 +57,9 @@ kubectl get persistentvolumes
 kubectl -n {namespace} get services
 kubectl -n {namespace} get svc
 
+# Use this command to list all the deployments within a namespace
+kubectl -n {namespace} get deployments
+
 # Use this command to list all the pods within a namespace
 # It also shows you the status and age of each of the pods
 kubectl -n {namespace} get pods
