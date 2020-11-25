@@ -33,3 +33,16 @@ https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/
 |D32s v3	        |32	    | 128 GiB	|256 GiB	        |$1.536/hour    |$0.9160/hour (~40%)	|$0.5896/hour (~62%)	|$0.4103/hour (~73%)|
 |D48s v3	        |48	    | 192 GiB	|384 GiB	        |$2.304/hour    |$1.3286/hour (~42%)	|$0.864/hour (~63%)	    |$0.6154/hour (~73%)|
 |D64s v3	        |64	    | 256 GiB	|512 GiB	        |$3.072/hour    |$1.8320/hour (~40%)	|$1.1792/hour (~62%)	|$0.8206/hour (~73%)|
+
+
+## Cluster Node Sizing
+
+To get started, we will set up 2 kubernetes node pools
+- system node pool with 1 virtual machine (or node)
+- agent node pool with 3 virtual machines (or nodes)
+
+## Cluster Node Selections
+- The system node pool will consist of 1 Standard_D4s_v3 instance (giving us 4 vCPUs and 16GB of RAM).
+- The agent node pool will consist of 3 Standard_D8s_v3 instances (giving us a total of 24 vCPUs and 96GB of RAM).
+
+
