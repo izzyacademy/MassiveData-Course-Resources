@@ -24,3 +24,4 @@
 
 ### Redis CLI Commands
 - https://redis.io/topics/rediscli
+- https://redis.io/commands
