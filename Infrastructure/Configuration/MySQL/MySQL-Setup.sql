@@ -1,3 +1,10 @@
+
+-- Log into the remote container
+-- kubectl -n mysql56 exec deploy/mysql -it -- bash
+
+-- Connect to the database server locally
+-- mysql -u root -pA8B4CD3F
+
 -- Select the MySQL database
 USE mysql;
 
