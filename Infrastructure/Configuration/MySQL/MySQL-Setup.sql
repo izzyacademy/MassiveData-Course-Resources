@@ -12,22 +12,18 @@ USE mysql;
 SELECT User,Host,Password FROM mysql.user;
 
 -- Create a new root user and grant permissions to all resources
-CREATE USER 'root'@'localhost' IDENTIFIED BY 'db3k4Cc';
+--- CREATE USER 'root'@'localhost' IDENTIFIED BY 'db3k4Cc';
 
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost';
+-- GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost';
 
 -- Remove all unsafe user accounts
 DELETE FROM mysql.user WHERE LENGTH(User) = 0 OR LENGTH(Password) = 0;
 
--- Set up the practice database and create the user for it
-CREATE DATABASE production DEFAULT CHARACTER SET utf8;
+CREATE USER 'application'@'%' IDENTIFIED BY 'db3k4Cc';
 
-CREATE USER 'dbpractice'@'%' IDENTIFIED BY 'db3k4Cc';
-
-GRANT ALL PRIVILEGES ON production.* TO 'dbpractice'@'%';
+GRANT ALL PRIVILEGES ON production.* TO 'application'@'%';
 
 FLUSH PRIVILEGES;
-
 
 
 --- Set up Database for storing application data
