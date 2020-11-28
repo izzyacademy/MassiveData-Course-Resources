@@ -176,3 +176,39 @@ INSERT INTO order_items (order_id, sku_id, item_count, date_created) VALUES
 (5002, '5002.XL', 9.00, 'Small Shrimp 10 count');
  **/
  
+
+ 
+ SELECT p.product_id, SUBSTRING(o.date_created, 1, 10) AS order_date, (ps.sku_price * oi.item_count) AS order_amount
+ FROM products AS p
+ INNER JOIN product_skus AS ps ON (p.product_id = ps.product_id)
+ INNER JOIN order_items AS oi ON (oi.sku_id = ps.sku_id)
+ INNER JOIN orders AS o ON (o.order_id = oi.order_id)
+ WHERE SUBSTRING(o.date_created, 1, 10) = '2020-11-01';
+ 
+ SELECT SUBSTRING(o.date_created, 1, 10) AS order_date, SUM(ps.sku_price * oi.item_count) AS order_total
+ FROM products AS p
+ INNER JOIN product_skus AS ps ON (p.product_id = ps.product_id)
+ INNER JOIN order_items AS oi ON (oi.sku_id = ps.sku_id)
+ INNER JOIN orders AS o ON (o.order_id = oi.order_id)
+ GROUP BY order_date 
+ ORDER BY order_date ASC;
+ 
+ SELECT p.product_id, SUM(ps.sku_price * oi.item_count) AS order_total
+ FROM products AS p
+ INNER JOIN product_skus AS ps ON (p.product_id = ps.product_id)
+ INNER JOIN order_items AS oi ON (oi.sku_id = ps.sku_id)
+ INNER JOIN orders AS o ON (o.order_id = oi.order_id)
+ WHERE SUBSTRING(o.date_created, 1, 10) = '2020-11-01'
+ GROUP BY p.product_id 
+ ORDER BY p.product_id ASC;
+ 
+ SELECT d.name AS department, SUM(ps.sku_price * oi.item_count) AS order_total
+ FROM products AS p
+ INNER JOIN product_skus AS ps ON (p.product_id = ps.product_id)
+ INNER JOIN departments AS d ON (d.department_id = p.department)
+ INNER JOIN order_items AS oi ON (oi.sku_id = ps.sku_id)
+ INNER JOIN orders AS o ON (o.order_id = oi.order_id)
+ WHERE SUBSTRING(o.date_created, 1, 10) = '2020-11-01'
+ GROUP BY d.department_id 
+ ORDER BY d.department_id ASC;
+ 
