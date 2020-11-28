@@ -97,31 +97,28 @@ helm uninstall ubuntu-debugger
 ```
 
 ### Setting up MySQL Datastores
-Use the following commands to install/uninstall MySQL 5.6, 5.7 or 8.0 respectively.
+
+Use the following commands to install MySQL 5.6 and then check if the pods and the services are available for use
 
 ```shell
 
 helm upgrade --install mysql56 ./MySQL5.6
-helm uninstall mysql56
 
-helm upgrade --install mysql57 ./MySQL5.7
-helm uninstall mysql57
+kubectl -n mysql56 get pods
 
-helm upgrade --install mysql80 ./MySQL8.0
-helm uninstall mysql80
+kubectl -n mysql56 get services
+
 ```
 
 ### Setting up PostgreSQL
 
-Use the following commands to install/uninstall PostgreSQL 11 and 13 respectively
+Use the following commands to install PostgreSQL 11 and 13 respectively
 
 ```shell
 
 helm upgrade --install postgres116 ./Postgres11.6
-helm uninstall postgres116
 
 helm upgrade --install postgres130 ./Postgres13.0
-helm uninstall postgres130
 
 ```
 
