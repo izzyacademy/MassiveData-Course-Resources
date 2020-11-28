@@ -21,7 +21,7 @@ DELETE FROM mysql.user WHERE LENGTH(User) = 0 OR LENGTH(Password) = 0;
 
 CREATE USER 'application'@'%' IDENTIFIED BY 'db3k4Cc';
 
-GRANT ALL PRIVILEGES ON production.* TO 'application'@'%';
+GRANT ALL PRIVILEGES ON ecommerce.* TO 'application'@'%';
 
 FLUSH PRIVILEGES;
 
@@ -37,4 +37,3 @@ CREATE USER 'debezium'@'%' IDENTIFIED BY 'db3k4Cc';
 GRANT SELECT, RELOAD, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'debezium'@'%' IDENTIFIED BY 'db3k4Cc';
 
 FLUSH PRIVILEGES;
-
