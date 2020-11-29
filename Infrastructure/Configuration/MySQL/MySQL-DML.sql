@@ -212,3 +212,11 @@ INSERT INTO order_items (order_id, sku_id, item_count, date_created) VALUES
  GROUP BY d.department_id 
  ORDER BY d.department_id ASC;
  
+ -- Show the products with the MAX order amount for each date
+ SELECT SUBSTRING(o.date_created, 1, 10) AS sales_date, p.product_id, p.name, MAX(ps.sku_price * oi.item_count) AS max_order_amount
+ FROM products AS p
+ INNER JOIN product_skus AS ps ON (p.product_id = ps.product_id)
+ INNER JOIN order_items AS oi ON (oi.sku_id = ps.sku_id)
+ INNER JOIN orders AS o ON (o.order_id = oi.order_id)
+ GROUP BY sales_date;
+ 
