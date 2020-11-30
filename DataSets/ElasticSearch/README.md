@@ -31,29 +31,37 @@ curl -X PUT "http://localhost:9200/products?pretty" -H 'Content-Type: applicatio
 - [Analyzers for Indexing and Query Time](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/analyzer.html)
 
 ```shell
+
 curl -X PUT "http://localhost:9200/products/_mapping?pretty" -H 'Content-Type: application/json' -d'
 {
-  "properties": {
-    "product_id": {
-      "type": "integer"
-    },
-    "name": {
-      "type": "keyword"
-    },
-    "long_description": {
-      "type": "text",
-      "index": true
-    },
-    "department_search": {
-      "type": "text",
-      "index": true
-    },
-    "department": {
-      "type": "keyword",
-      "index": false
-    },
+  "settings": {
+    "index": {
+      "number_of_shards": 1,  
+      "number_of_replicas": 1,
+	  "analysis": {
+        "analyzer": {
+          "synonym": {
+            "tokenizer": "standard",
+            "filter": [ "izzy_stop", "synonym" ]
+          }
+        },
+        "filter": {
+          "izzy_stop": {
+            "type": "stop",
+            "stopwords": [ "the", "is" ]
+          },
+          "synonym": {
+            "type": "synonym",
+            "lenient": true,
+            "expand": true,
+            "synonyms": [ "lift => elevator", "speed, velocity", "cookies, buscuit", "holiday, vacation", "xmas, christmas", "soda, pop, soft drink" ]
+          }
+        }
+      }
+    }
   }
 }
+
 '
 
 ```
