@@ -93,3 +93,22 @@ curl -X PUT "http://localhost:9200/products/_doc/1?pretty" -H 'Content-Type: app
 '
 ```
 
+
+### Querying the Index for Data
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html
+
+
+```shell
+
+curl -X GET "http://localhost:9200/products/_search?pretty" -H 'Content-Type: application/json' -d'
+{
+  "query": {
+    "match": {
+      "message": {
+        "query": "cool drinks"
+      }
+    }
+  }
+}
+
