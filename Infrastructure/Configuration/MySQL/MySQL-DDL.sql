@@ -38,7 +38,8 @@ CREATE TABLE `product_skus`
     `sku_description` TEXT NOT NULL COMMENT 'SKU Description',
     `date_created` DATETIME NOT NULL DEFAULT '2020-01-01 16:00:00' COMMENT 'When this record was created',
     `date_modified` TIMESTAMP NOT NULL COMMENT 'When this record was last updated',
-    PRIMARY KEY (`product_id`, `sku_id`)
+    PRIMARY KEY (`product_id`, `sku_id`),
+  KEY `sku_id` (`sku_id`)
 ) ENGINE=InnoDB CHARSET=utf8 COMMENT='Used to store SKUs of products';
 
 DROP TABLE IF EXISTS `suppliers`;
@@ -80,11 +81,13 @@ CREATE TABLE `order_items` (
   `item_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Uniquely identifies the order',
   `item_count` int(10) NOT NULL DEFAULT '1' COMMENT 'Number of items in the order',
   `sku_id` varchar(16) NOT NULL COMMENT 'SKU identifier',
+  `order_id` int(10) NOT NULL COMMENT 'Order identifier',
   `date_created` DATETIME NOT NULL DEFAULT '2020-01-01 16:00:00' COMMENT 'When this record was created',
   `date_modified` TIMESTAMP NOT NULL COMMENT 'When this record was last updated',
   PRIMARY KEY (`item_id`),
-  KEY `sku_id` (`sku_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Used to order items';
+  KEY `sku_id` (`sku_id`),
+  KEY `order_id` (`order_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='products ordered within a specific order';
 
 
 DROP TABLE IF EXISTS `user_activities`;

@@ -57,6 +57,9 @@ kubectl get persistentvolumes
 kubectl -n {namespace} get services
 kubectl -n {namespace} get svc
 
+# Use this command to list all the deployments within a namespace
+kubectl -n {namespace} get deployments
+
 # Use this command to list all the pods within a namespace
 # It also shows you the status and age of each of the pods
 kubectl -n {namespace} get pods
@@ -94,60 +97,67 @@ helm uninstall ubuntu-debugger
 ```
 
 ### Setting up MySQL Datastores
-Use the following commands to install/uninstall MySQL 5.6, 5.7 or 8.0 respectively.
+
+Use the following commands to install MySQL 5.6 and then check if the pods and the services are available for use
 
 ```shell
 
 helm upgrade --install mysql56 ./MySQL5.6
-helm uninstall mysql56
 
-helm upgrade --install mysql57 ./MySQL5.7
-helm uninstall mysql57
+kubectl -n mysql56 get pods
 
-helm upgrade --install mysql80 ./MySQL8.0
-helm uninstall mysql80
+kubectl -n mysql56 get services
+
 ```
 
 ### Setting up PostgreSQL
 
-Use the following commands to install/uninstall PostgreSQL 11 and 13 respectively
+Use the following commands to install PostgreSQL 11 and 13 respectively
 
 ```shell
 
 helm upgrade --install postgres116 ./Postgres11.6
-helm uninstall postgres116
 
-helm upgrade --install postgres130 ./Postgres13.0
-helm uninstall postgres130
+kubectl -n postgres116 get pods
+
+kubectl -n postgres116 get services
 
 ```
 
 ### Setting up Cassandra
 
-These commands demonstrates how to set up and remove the Cassandra cluster
+These commands demonstrates how to set up the Cassandra cluster
 
 ```shell
 # This command installs the 3-node Cassandra Cluster
 helm upgrade --install cassandra ./Cassandra --set cassandra.enabled=true
 
-# This command uninstalls the cassandra resources
-helm uninstall cassandra
+kubectl -n cassandra get pods
+
+kubectl -n cassandra get svc
+
 ```
 
 ### Setting up MongoDB
 
-These commands demonstrates how to setup and remove the MongoDB cluster
+These commands demonstrates how to setup the MongoDB datastore
 
 ```shell
 helm upgrade --install mongodb ./MongoDB
-helm uninstall mongodb
+
+kubectl -n mongodb get pods
+
+kubectl -n mongodb get svc
 ```
 
 ### Setting up Redis Key Value Store
 
 ```shell
 helm upgrade --install redis ./Redis
-helm uninstall redis
+
+kubectl -n redis get pods
+
+kubectl -n redis get svc
 
 ```
 
@@ -155,8 +165,13 @@ helm uninstall redis
 
 ```shell
 # Install Elastic Search Server
+
 helm upgrade --install elastic-foundation Elastic-Foundation/
 helm upgrade --install elastic-resources Elastic-Resources/
+
+kubectl get pods
+
+kubectl get svc
 
 ```
 
@@ -166,7 +181,15 @@ Run this command to install or uninstall the Neo4j graph store
 
 ```shell
 
+<<<<<<< HEAD
 helm install neo4j ./Neo4j --set core.standalone=true --set acceptLicenseAgreement=yes --set neo4jPassword=mySecretPassword
+=======
+helm install neo4j ./Neo4j --set core.standalone=true --set acceptLicenseAgreement=yes --set neo4jPassword=neo4base
+
+kubectl get pods
+
+kubectl get svc
+>>>>>>> 10cc0a6dae07bd5643fde5c240fab8a8ef9db43a
 
 # helm install neo4j ./Neo4j --set core.standalone=true --set acceptLicenseAgreement=yes --set neo4jPassword=neo4base
 
@@ -188,28 +211,33 @@ kublect get svc
 # Run this command to create the namespace for the Kafka ecosystem
 kubectl create ns river
 
+# After each helm install command use the following commands to see the pods and services within the cluster
+
+kubectl -n river get pods
+kubectl -n river get svc
+
 # The following command can be used to install/uninstall the Zookeeper component
 helm upgrade --install river-zookeeper ./Confluent --set zookeeper.enabled=true
-helm uninstall river-zookeeper
+
 
 # The following command can be used to install/uninstall the Kafka Broker components
 helm upgrade --install river-broker ./Confluent --set broker.enabled=true
-helm uninstall river-broker
+
 
 # The following command can be used to install/uninstall the Schema registry components
 helm upgrade --install river-registry ./Confluent --set schemaregistry.enabled=true
-helm uninstall river-registry
+
 
 # The following command can be used to install/uninstall the Kafka Connect components
 helm upgrade --install river-connect ./Confluent --set connect.enabled=true
-helm uninstall river-connect
+
 
 # The following command can be used to install/uninstall the Kafka Rest Proxy components
 helm upgrade --install river-restproxy ./Confluent --set restproxy.enabled=true
-helm uninstall river-restproxy
+
 
 # The following command can be used to install/uninstall the KSQL components
 helm upgrade --install river-ksql ./Confluent --set ksqldbserver.enabled=true --set ksqldbcli.enabled=true
-helm uninstall river-ksql
+
 
 ```
