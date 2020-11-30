@@ -190,6 +190,7 @@ helm upgrade --install elastic-resources Elastic-Resources/
 
 kubectl get pods
 
+# look for the public ips/port numbers for the elasticsearch-external and kibana-external services
 kubectl get svc
 
 ```
