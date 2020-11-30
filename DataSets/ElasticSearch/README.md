@@ -8,7 +8,7 @@ The example below shows how to create an index if the ElasticSearch instance is 
 
 ```shell
 
-curl -X PUT "http://localhost:9200/products?pretty" -H 'Content-Type: application/json' -d'
+curl -u "elastic:$PASSWORD" -X PUT "http://localhost:9200/products?pretty" -H 'Content-Type: application/json' -d'
 {
   "settings": {
     "index": {
