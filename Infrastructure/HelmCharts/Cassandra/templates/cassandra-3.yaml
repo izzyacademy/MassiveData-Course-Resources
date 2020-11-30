@@ -32,6 +32,10 @@ spec:
           value: "{{ .Values.infrastructure.cluster }}"
         - name: CASSANDRA_DC
           value: "{{ .Values.infrastructure.datacenter }}"
+        - name: CASSANDRA_RACK
+          value: "cr3c"
+        - name: CASSANDRA_ENDPOINT_SNITCH
+          value: "{{ .Values.infrastructure.endpoint_snitch }}"
         - name: CASSANDRA_BROADCAST_ADDRESS
           value: "cassandra3-external"
         - name: CASSANDRA_RPC_ADDRESS

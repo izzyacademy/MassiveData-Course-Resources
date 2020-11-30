@@ -2,11 +2,12 @@
 infrastructure:
   namespace: "cassandra"
   storageClass: "managed-premium"
-  image: "cassandra:3.11.8"
+  image: "cassandra:3.11.9"
   cluster: "izzyacademy"
-  datacenter: "kubernetes"
+  datacenter: "kubecontrol"
+  endpoint_snitch: "GossipingPropertyFileSnitch"
 
-# How to Install/Uninstall
+# How to Install/Uninstall the Cassandra 3-node cluster
 # helm upgrade --install cassandra ./Cassandra --set cassandra.enabled=true
 # helm uninstall cassandra
 cassandra:

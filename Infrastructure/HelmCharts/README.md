@@ -167,8 +167,17 @@ Run this command to install or uninstall the Neo4j graph store
 ```shell
 
 helm install neo4j ./Neo4j --set core.standalone=true --set acceptLicenseAgreement=yes --set neo4jPassword=mySecretPassword
-helm uninstall neo4j
 
+# helm install neo4j ./Neo4j --set core.standalone=true --set acceptLicenseAgreement=yes --set neo4jPassword=neo4base
+
+# This should show the Neo4j pods in the default namespace
+kubectl get pods 
+
+# This should show the Neo4j services (we need the external service ip address and port 7474)
+kublect get svc
+
+# We will now use the password above and the IP address to log into the Web UI for Neo4j
+# HTTP port is on 7474 and the Bolt protocol port is on 7687
 ```
 
 
