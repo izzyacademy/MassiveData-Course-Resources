@@ -28,6 +28,7 @@ curl -X PUT "http://localhost:9200/products?pretty" -H 'Content-Type: applicatio
 - [Create Mapping Syntax](https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping.html)
 - [Changes to Type Management in ElasticSearch 7.0 or later](https://www.elastic.co/guide/en/elasticsearch/reference/current/removal-of-types.html)
 - [Synonyms](https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-synonym-tokenfilter.html)
+- [Analyzers for Indexing and Query Time](https://www.elastic.co/guide/en/elasticsearch/reference/7.3/analyzer.html)
 
 ```shell
 curl -X PUT "http://localhost:9200/products/_mapping?pretty" -H 'Content-Type: application/json' -d'
