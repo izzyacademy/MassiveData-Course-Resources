@@ -16,7 +16,7 @@ curl -X PUT "http://localhost:9200/products?pretty" -H 'Content-Type: applicatio
       "number_of_replicas": 1,
 	  "analysis": {
         "analyzer": {
-          "synonym": {
+          "izzy_synonym": {
             "tokenizer": "standard",
             "filter": [ "izzy_stop", "synonym" ]
           }
@@ -63,7 +63,8 @@ curl -X PUT "http://localhost:9200/products/_mapping?pretty" -H 'Content-Type: a
     },
     "long_description": {
       "type": "keyword",
-      "index": true
+      "index": true,
+      "analyzer":"izzy_synonym",
     },
     "department": {
       "type": "text",
