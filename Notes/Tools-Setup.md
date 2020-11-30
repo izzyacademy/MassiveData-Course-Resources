@@ -15,6 +15,9 @@ This page contains instructions on how to setup your local development environme
 - Scala 2.12.12
 - Spark 3.0.1 (with Hadoop 3.2 or later)
 - Maven 3.6.3 or later
+- Node.js 14.15 or later
+- Node Package Manager (npm) 6.14.8 or later
+- Angular CLI 11.0.2 or later
 
 
 ### Git
@@ -73,4 +76,14 @@ Visit [this page](https://spark.apache.org/downloads.html) to get the binaries
 ### Maven 3.6.3 or later
 The maven project is used to compile Java and Scala source codes into binaries. 
 You can visit [this page](https://maven.apache.org/download.cgi) to download the Maven tarball, then decompress the tarball and add the bin directory to your Path.
+
+
+### Node, NPM and Angular Installation
+
+These links below should guide you on how to set up Node, the package manager and the Angular CLI successfully for your environment
+
+- [Node](https://nodejs.org/en/)
+- [Node Package Manager](https://www.npmjs.com/get-npm)
+- [Angular CLI](https://cli.angular.io/)
+
 
