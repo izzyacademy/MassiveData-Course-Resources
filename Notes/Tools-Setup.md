@@ -19,6 +19,7 @@ This page contains instructions on how to setup your local development environme
 - Node Package Manager (npm) 6.14.8 or later
 - Angular CLI 11.0.2 or later
 - A Web Browser (Google Chrome or Microsoft Edge)
+- Webstorm IDE (for Web Application Development)
 
 
 ### Git
@@ -78,6 +79,9 @@ Visit [this page](https://spark.apache.org/downloads.html) to get the binaries
 The maven project is used to compile Java and Scala source codes into binaries. 
 You can visit [this page](https://maven.apache.org/download.cgi) to download the Maven tarball, then decompress the tarball and add the bin directory to your Path.
 
+### Webstorm IDE
+This IDE is very google for development of Web Applications. This is what we will be using for editing and creating our web applications
+You can visit [this page](https://www.jetbrains.com/webstorm/download/) to download and install it.
 
 ### Node, NPM and Angular Installation
 
