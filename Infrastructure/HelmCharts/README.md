@@ -181,17 +181,7 @@ Run this command to install or uninstall the Neo4j graph store
 
 ```shell
 
-<<<<<<< HEAD
-helm install neo4j ./Neo4j --set core.standalone=true --set acceptLicenseAgreement=yes --set neo4jPassword=mySecretPassword
-=======
 helm install neo4j ./Neo4j --set core.standalone=true --set acceptLicenseAgreement=yes --set neo4jPassword=neo4base
-
-kubectl get pods
-
-kubectl get svc
->>>>>>> 10cc0a6dae07bd5643fde5c240fab8a8ef9db43a
-
-# helm install neo4j ./Neo4j --set core.standalone=true --set acceptLicenseAgreement=yes --set neo4jPassword=neo4base
 
 # This should show the Neo4j pods in the default namespace
 kubectl get pods 
