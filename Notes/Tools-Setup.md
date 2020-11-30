@@ -18,6 +18,7 @@ This page contains instructions on how to setup your local development environme
 - Node.js 14.15 or later
 - Node Package Manager (npm) 6.14.8 or later
 - Angular CLI 11.0.2 or later
+- A Web Browser (Google Chrome or Microsoft Edge)
 
 
 ### Git
@@ -85,5 +86,7 @@ These links below should guide you on how to set up Node, the package manager an
 - [Node](https://nodejs.org/en/)
 - [Node Package Manager](https://www.npmjs.com/get-npm)
 - [Angular CLI](https://cli.angular.io/)
+- [Microsoft Edge](https://www.microsoft.com/en-us/edge)
+- [Google Chrome](https://www.google.com/chrome/)
 
 
