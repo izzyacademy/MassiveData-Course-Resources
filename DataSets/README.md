@@ -13,6 +13,7 @@
 - https://docs.datastax.com/en/cql-oss/3.3/cql/cql_reference/cqlInsert.html
 
 ### ElasticSearch Syntax for Queries
+- https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html
 - https://www.elastic.co/guide/en/elasticsearch/reference/current/search.html
 
 ### MongoDB Tutorials
