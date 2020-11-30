@@ -75,3 +75,21 @@ curl -X PUT "http://localhost:9200/products/_mapping?pretty" -H 'Content-Type: a
 '
 
 ```
+
+
+### Creating a Document 
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html
+
+```shell
+curl -X PUT "http://localhost:9200/products/_doc/1?pretty" -H 'Content-Type: application/json' -d'
+{
+  "@timestamp": "2020-11-15T13:12:00",
+  "product_id": 1000,
+  "name": "Cold Orange Soda",
+  "department" : "beverage",
+  "long_description": "This is a great soda that goes well with cookies when you are relaxing and watching a soccer game"
+}
+'
+```
+
