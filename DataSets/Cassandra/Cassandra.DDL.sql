@@ -1,4 +1,24 @@
 
+/**
+
+# Get the current status of the Cassandra Deployment and Pods
+kubectl -n cassandra get deployments
+kubectl -n cassandra get pods
+
+# Get into the pod of one of the Cassandra nodes
+kubectl -n cassandra exec deploy/cassandra1 -it -- bash
+
+# Get the status and information about the cluster
+nodetool status
+nodetool info
+
+
+# Open up the Cassandra Query Language (CQL) Shell (cqlsh) and you can now execute the DDL and DML statements
+cqlsh
+
+**/
+
+
 DESCRIBE KEYSPACES;
 
 CREATE KEYSPACE ecommerce WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy'};
