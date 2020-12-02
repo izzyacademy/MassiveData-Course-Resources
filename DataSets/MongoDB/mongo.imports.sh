@@ -2,7 +2,7 @@
 
 # https://docs.mongodb.com/database-tools/mongoimport/#import-csv-with-specified-field-types
 
-hostname="52.241.138.173"
+hostname="mongo-external.mongo.svc.cluster.local"
 port_number="27017"
 username="admin"
 password="mong044120"
