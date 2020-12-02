@@ -36,7 +36,7 @@ USE ecommerce;
 -- Example of how to create a table with just a primary key and no clustering columns or fields
 DROP TABLE IF EXISTS ecommerce.customer_meta;
 
-CREATE TABLE customer_meta
+CREATE TABLE ecommerce.customer_meta
 (
     customer_id INT PRIMARY KEY,
     first_name TEXT,
@@ -199,8 +199,8 @@ CREATE TABLE customer_order_source_tracking
 -- Same as above but introduces static columns for fields that are sticky to the partition key (customer_id, order_id)
 DROP TABLE IF EXISTS ecommerce.customer_order_source_trackingv2;
 
--- Uses some static columns
-CREATE TABLE customer_order_source_trackingv2
+-- if you prefix the table name with the keyspace, you do not use to explictly set the default keyspace by name
+CREATE TABLE ecommerce.customer_order_source_trackingv2
 (
     customer_id INT,
     order_id INT,
