@@ -47,7 +47,7 @@ cd ~/Labs/MassiveData-Course-Resources/DataSets/MongoDB
 
 ./mongo.imports.sh
 
-# You should see an output similar to this
+# You should see an output similar to this for each collection imported successfully
 13 document(s) imported successfully. 0 document(s) failed to import.
 
 ```
