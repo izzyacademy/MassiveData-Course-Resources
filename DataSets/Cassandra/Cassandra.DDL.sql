@@ -21,7 +21,7 @@ cqlsh
 
 DESCRIBE KEYSPACES;
 
-CREATE KEYSPACE ecommerce WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy'};
+CREATE KEYSPACE practice WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy'};
 
 CREATE  KEYSPACE IF NOT EXISTS ecommerce
 WITH REPLICATION = {
@@ -33,6 +33,7 @@ AND DURABLE_WRITES =  true;
 USE ecommerce;
 
 
+-- Example of how to create a table with just a primary key and no clustering columns or fields
 DROP TABLE IF EXISTS ecommerce.customer_meta;
 
 CREATE TABLE customer_meta
@@ -43,6 +44,7 @@ CREATE TABLE customer_meta
     email TEXT
 ) WITH comment='Used to store customer meta data. Single partition key with no clustering';
 
+-- Example of how to create a table with just a primary key and no clustering columns or fields
 DROP TABLE IF EXISTS ecommerce.customer_meta;
 
 CREATE TABLE customer_meta
@@ -54,6 +56,8 @@ CREATE TABLE customer_meta
     PRIMARY KEY (customer_id)
 ) WITH comment='Used to store customer meta data. Single partition key with no clustering';
 
+
+-- Example of how to create a table with just a primary key with one partition key and one clustering column
 DROP TABLE IF EXISTS ecommerce.customer_meta;
 
 CREATE TABLE customer_meta
@@ -66,6 +70,8 @@ CREATE TABLE customer_meta
     PRIMARY KEY (customer_id, category_id)
 ) WITH comment='Used to store customer meta data using category_id as the clustering column';
 
+
+-- Example of how to create a table with just a primary key with a partition key and two clustering columns
 DROP TABLE IF EXISTS ecommerce.customer_meta;
 
 CREATE TABLE customer_meta
@@ -80,6 +86,7 @@ CREATE TABLE customer_meta
 ) WITH comment='Used to store customer meta data using category_id and country_id as the clustering columns';
 
 
+-- This example creates a table with partition key, clustering columns and changes the default sorting of how data is stored
 DROP TABLE IF EXISTS ecommerce.customer_meta;
 
 CREATE TABLE customer_meta
@@ -95,6 +102,7 @@ CREATE TABLE customer_meta
 AND comment='using customer_id as partition key and country_id and category_id as clustering columns with custom ordering/sorting';
 
 
+-- This example creates a table with partition key, clustering columns and changes the default sorting of how data is stored
 DROP TABLE IF EXISTS ecommerce.customer_meta;
 
 CREATE TABLE customer_meta
@@ -111,6 +119,7 @@ AND comment='using customer_id as partition key and country_id and category_id a
 
 DROP TABLE IF EXISTS ecommerce.customer_meta;
 
+-- This example creates a table with composite partition key, just one clustering column and changes the default sorting of how data is stored
 CREATE TABLE customer_meta
 (
     customer_id INT,
@@ -123,6 +132,7 @@ CREATE TABLE customer_meta
 ) WITH CLUSTERING ORDER BY (category_id DESC) 
 AND comment='using customer_id and country_id as partition key with category_id as clustering column with custom ordering/sorting';
 
+-- Another example sorting first by country
 DROP TABLE IF EXISTS ecommerce.customer_meta;
 
 CREATE TABLE customer_meta
@@ -137,6 +147,7 @@ CREATE TABLE customer_meta
 ) WITH CLUSTERING ORDER BY (country_id ASC, category_id DESC) 
 AND comment='Used to store customer meta data using category_id and country_id as the clustering columns';
 
+-- Another example sorting first by country
 DROP TABLE IF EXISTS ecommerce.customer_meta;
 
 CREATE TABLE customer_meta
@@ -152,6 +163,8 @@ CREATE TABLE customer_meta
 ) WITH CLUSTERING ORDER BY (country_id DESC, category_id ASC) 
 AND comment='Used to store customer meta data using category_id and country_id as the clustering columns';
 
+
+--- Tracking sources of customer orders. Uses a composite partition key (customer_id, order_id) with 2 clustering columns order_source_category, product_id
 DROP TABLE IF EXISTS ecommerce.customer_order_source_tracking;
 
 CREATE TABLE customer_order_source_tracking
@@ -183,6 +196,7 @@ CREATE TABLE customer_order_source_tracking
 ) WITH comment='Used to keep track the specific source of orders and products placed by a customer';
 
 
+-- Same as above but introduces static columns for fields that are sticky to the partition key (customer_id, order_id)
 DROP TABLE IF EXISTS ecommerce.customer_order_source_trackingv2;
 
 -- Uses some static columns
