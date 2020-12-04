@@ -1,12 +1,9 @@
-
-
 ---
 
 USE inventory;
 
+-- Sets the min and max water levels for each SKU to be generated randomly within each range
 SET @a=32, @b=64, @c=512, @d=1024;
-
-(FLOOR(RAND()*(@b-@a+1))+@a), (FLOOR(RAND()*(@d-@c+1))+@c)
 
 TRUNCATE TABLE `product_inventory_benchmarks`;
 
