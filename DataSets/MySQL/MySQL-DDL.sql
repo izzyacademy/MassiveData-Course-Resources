@@ -145,8 +145,8 @@ DROP TABLE IF EXISTS `product_inventory_benchmarks`;
 CREATE TABLE `product_inventory_benchmarks` (
   `product_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the product',
   `sku_id` varchar(16) NOT NULL COMMENT 'Product SKU identifier',
-  `low_water_mark_count` int(10) NOT NULL DEFAULT '1' COMMENT 'Lowest inventory count that triggers replenishment',
-  `high_water_mark_count` int(10) NOT NULL DEFAULT '1' COMMENT 'Maximum inventory count that stops replenishment',
+  `low_water_mark_count` int(10) NOT NULL DEFAULT '32' COMMENT 'Lowest inventory count that triggers replenishment',
+  `high_water_mark_count` int(10) NOT NULL DEFAULT '512' COMMENT 'Maximum inventory count that stops replenishment',
   `date_created` datetime NOT NULL DEFAULT '2020-12-01 16:00:00' COMMENT 'When this record was created',
   `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'When this record was last updated',
   PRIMARY KEY (`sku_id`),
