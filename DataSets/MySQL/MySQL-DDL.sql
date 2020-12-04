@@ -101,6 +101,7 @@ CREATE TABLE `orders` (
   `order_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Uniquely identifies the order',
   `customer_id` int(10) NOT NULL DEFAULT '25', COMMENT 'Identifies the customer that owns the order',
   `status` enum('FULLFILLMENT','SHIPPED','DELIVERED','CANCELLED','REFUNDED') NOT NULL DEFAULT 'FULLFILLMENT' COMMENT 'Order Status',
+  `order_source` enum('WEB','MOBILE','PHONE', 'STORE') NOT NULL DEFAULT 'WEB' COMMENT 'Order Source',
   `date_created` DATETIME NOT NULL DEFAULT '2020-01-01 16:00:00' COMMENT 'When this record was created',
   `date_modified` TIMESTAMP NOT NULL COMMENT 'When this record was last updated',
   PRIMARY KEY (`order_id`),
@@ -124,16 +125,3 @@ CREATE TABLE `order_items` (
   KEY `sku_id` (`sku_id`),
   KEY `status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='products ordered within a specific order';
-
-
-DROP TABLE IF EXISTS `user_activities`;
-CREATE TABLE `user_activities` (
-  `activity_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Uniquely identifies the order',
-  `user_id` int(10) NOT NULL DEFAULT '1' COMMENT 'Id of the User',
-  `page_id` varchar(16) NOT NULL COMMENT 'SKU identifier',
-  `activity_time` DATETIME NOT NULL DEFAULT '2020-01-01 16:00:00' COMMENT 'When this activity occurred',
-  `date_modified` TIMESTAMP NOT NULL COMMENT 'When this record was last updated',
-  PRIMARY KEY (`activity_id`),
-  KEY `user_id` (`user_id`),
-  KEY `page_id` (`page_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Used to track user activities';
