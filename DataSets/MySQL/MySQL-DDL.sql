@@ -1,6 +1,37 @@
 
 USE ecommerce;
 
+DROP TABLE IF EXISTS `customers`;
+CREATE TABLE `customers` (
+  `customer_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Uniquely identifies the Customer',
+  `first_name` varchar(128) NOT NULL DEFAULT '' COMMENT 'First name of the customer',
+  `last_name` int(10) NOT NULL DEFAULT '0' COMMENT 'Last name of the customer',
+  `email` varchar(128) NOT NULL DEFAULT '' COMMENT 'Email of the customer',
+  `date_created` DATETIME NOT NULL DEFAULT '2020-01-01 16:00:00' COMMENT 'When this record was created',
+  `date_modified` TIMESTAMP NOT NULL COMMENT 'When this record was last updated',
+  PRIMARY KEY (`customer_id`),
+  KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Used to store customers';
+
+DROP TABLE IF EXISTS `customer_addresses`;
+CREATE TABLE `customer_addresses` (
+  `address_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Uniquely identifies the Customer',
+  `customer_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Customer Identifier',
+  `type` enum('BILLING','SHIPPING','WORK','HOME') NOT NULL DEFAULT 'BILLING' COMMENT 'Address Classification',
+  `longitude` decimal(6,2) NOT NULL DEFAULT '0.00' COMMENT 'longitude for the address',
+  `latitude` decimal(6,2) NOT NULL DEFAULT '0.00' COMMENT 'latitude for the address',
+  `country` char(3) NOT NULL DEFAULT 'USA' COMMENT 'Country of the Customer',
+  `street` varchar(128) NOT NULL DEFAULT '' COMMENT 'Street for the Address',
+  `street2` varchar(64) NOT NULL DEFAULT '' COMMENT 'Additional Street info for the Address',
+  `city` varchar(64) NOT NULL DEFAULT '' COMMENT 'Street for the Address',
+  `state` varchar(64) NOT NULL DEFAULT '' COMMENT 'Street for the Address',
+  `postalcode` varchar(64) NOT NULL DEFAULT '' COMMENT 'Street for the Address',
+  `date_created` DATETIME NOT NULL DEFAULT '2020-01-01 16:00:00' COMMENT 'When this record was created',
+  `date_modified` TIMESTAMP NOT NULL COMMENT 'When this record was last updated',
+  PRIMARY KEY (`address_id`),
+  KEY `customer_id` (`customer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Used to store addresses for customers';
+
 DROP TABLE IF EXISTS `departments`;
 CREATE TABLE `departments` (
   `department_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the dept',
@@ -68,6 +99,7 @@ CREATE TABLE `product_suppliers` (
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `order_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Uniquely identifies the order',
+  `customer_id` int(10) NOT NULL DEFAULT '25', COMMENT 'Identifies the customer that owns the order',
   `status` enum('FULLFILLMENT','SHIPPED','DELIVERED','CANCELLED','REFUNDED') NOT NULL DEFAULT 'FULLFILLMENT' COMMENT 'Order Status',
   `date_created` DATETIME NOT NULL DEFAULT '2020-01-01 16:00:00' COMMENT 'When this record was created',
   `date_modified` TIMESTAMP NOT NULL COMMENT 'When this record was last updated',
@@ -78,15 +110,17 @@ CREATE TABLE `orders` (
 
 DROP TABLE IF EXISTS `order_items`;
 CREATE TABLE `order_items` (
-  `item_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Uniquely identifies the order',
+  `order_line_item_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Uniquely identifies the order',
   `item_count` int(10) NOT NULL DEFAULT '1' COMMENT 'Number of items in the order',
-  `sku_id` varchar(16) NOT NULL COMMENT 'SKU identifier',
+  `sku_id` varchar(16) NOT NULL COMMENT 'Product SKU identifier',
+  `product_id` int(10) NOT NULL COMMENT 'Product identifier',
   `order_id` int(10) NOT NULL COMMENT 'Order identifier',
   `date_created` DATETIME NOT NULL DEFAULT '2020-01-01 16:00:00' COMMENT 'When this record was created',
   `date_modified` TIMESTAMP NOT NULL COMMENT 'When this record was last updated',
-  PRIMARY KEY (`item_id`),
+  PRIMARY KEY (`order_line_item_id`),
+  KEY `order_id` (`order_id`),
+  KEY `product_id` (`product_id`),
   KEY `sku_id` (`sku_id`),
-  KEY `order_id` (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='products ordered within a specific order';
 
 
@@ -101,4 +135,3 @@ CREATE TABLE `user_activities` (
   KEY `user_id` (`user_id`),
   KEY `page_id` (`page_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Used to track user activities';
-
