@@ -115,12 +115,14 @@ CREATE TABLE `order_items` (
   `sku_id` varchar(16) NOT NULL COMMENT 'Product SKU identifier',
   `product_id` int(10) NOT NULL COMMENT 'Product identifier',
   `order_id` int(10) NOT NULL COMMENT 'Order identifier',
+  `status` enum('ORDERED','RETURNED') NOT NULL DEFAULT 'ORDERED' COMMENT 'Order Line Item Status',
   `date_created` DATETIME NOT NULL DEFAULT '2020-01-01 16:00:00' COMMENT 'When this record was created',
   `date_modified` TIMESTAMP NOT NULL COMMENT 'When this record was last updated',
   PRIMARY KEY (`order_line_item_id`),
   KEY `order_id` (`order_id`),
   KEY `product_id` (`product_id`),
   KEY `sku_id` (`sku_id`),
+  KEY `status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='products ordered within a specific order';
 
 
