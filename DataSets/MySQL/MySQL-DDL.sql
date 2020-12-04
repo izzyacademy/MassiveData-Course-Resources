@@ -131,63 +131,55 @@ CREATE TABLE `order_items` (
 USE inventory;
 
 DROP TABLE IF EXISTS `product_inventory_levels`;
-CREATE TABLE `product_inventory_levels`
-(
-    `sku_id` varchar(16) NOT NULL COMMENT 'Product SKU identifier',
-	`product_id` INT(10) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the product',
-	`available_count` INT(10) NOT NULL DEFAULT '1' COMMENT 'Lowest inventory count that triggers replenishment',
-    `date_created` DATETIME NOT NULL DEFAULT '2020-12-01 16:00:00' COMMENT 'When this record was created',
-    `date_modified` TIMESTAMP NOT NULL COMMENT 'When this record was last updated',
-    PRIMARY KEY (`sku_id`),
-    KEY `product_id` (`product_id`)
-) ENGINE=InnoDB CHARSET=utf8 COMMENT='Stores the inventory levels for each SKU. This is updated in real time by an external process';
+CREATE TABLE `product_inventory_levels` (
+  `sku_id` varchar(16) NOT NULL COMMENT 'Product SKU identifier',
+  `product_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the product',
+  `available_count` int(10) NOT NULL DEFAULT '1' COMMENT 'Lowest inventory count that triggers replenishment',
+  `date_created` datetime NOT NULL DEFAULT '2020-12-01 16:00:00' COMMENT 'When this record was created',
+  `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'When this record was last updated',
+  PRIMARY KEY (`sku_id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Stores the inventory levels for each SKU. This is updated in real time by an external process';
 
 DROP TABLE IF EXISTS `product_inventory_benchmarks`;
-CREATE TABLE `product_inventory_benchmarks`
-(
-    `product_id` INT(10) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the product',
-    `sku_id` varchar(16) NOT NULL COMMENT 'Product SKU identifier',
-	`low_water_mark_count` INT(10) NOT NULL DEFAULT '1' COMMENT 'Lowest inventory count that triggers replenishment',
-	`high_water_mark_count` INT(10) NOT NULL DEFAULT '1' COMMENT 'Maximum inventory count that stops replenishment',
-    `date_created` DATETIME NOT NULL DEFAULT '2020-12-01 16:00:00' COMMENT 'When this record was created',
-    `date_modified` TIMESTAMP NOT NULL COMMENT 'When this record was last updated',
-    PRIMARY KEY (`sku_id`),
-    KEY `product_id` (`product_id`)
-) ENGINE=InnoDB CHARSET=utf8 COMMENT='Stores the inventory level benchmarks for replenishment events';
+CREATE TABLE `product_inventory_benchmarks` (
+  `product_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the product',
+  `sku_id` varchar(16) NOT NULL COMMENT 'Product SKU identifier',
+  `low_water_mark_count` int(10) NOT NULL DEFAULT '1' COMMENT 'Lowest inventory count that triggers replenishment',
+  `high_water_mark_count` int(10) NOT NULL DEFAULT '1' COMMENT 'Maximum inventory count that stops replenishment',
+  `date_created` datetime NOT NULL DEFAULT '2020-12-01 16:00:00' COMMENT 'When this record was created',
+  `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'When this record was last updated',
+  PRIMARY KEY (`sku_id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Stores the inventory level benchmarks for replenishment events';
 
 
 DROP TABLE IF EXISTS `replenishments`;
-
-CREATE TABLE `replenishments`
-(
-    `replenishment_id` INT(10) NOT NULL DEFAULT '0' COMMENT 'Record Identifier',
-    `product_id` INT(10) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the product',
-    `sku_id` varchar(16) NOT NULL COMMENT 'SKU identifier',
-	`replenishment_count` INT(10) NOT NULL DEFAULT '1' COMMENT 'The number of SKU Items replenished',
-    `date_created` DATETIME NOT NULL DEFAULT '2020-12-01 16:00:00' COMMENT 'When this record was created',
-    `date_modified` TIMESTAMP NOT NULL COMMENT 'When this record was last updated',
-    PRIMARY KEY (`replenishment_id`),
-    KEY `product_id` (`product_id`),
-	KEY `sku_id` (`sku_id`)
-) ENGINE=InnoDB CHARSET=utf8 COMMENT='Stores the replenishment events';
+CREATE TABLE `replenishments` (
+  `replenishment_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Record Identifier',
+  `product_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the product',
+  `sku_id` varchar(16) NOT NULL COMMENT 'SKU identifier',
+  `replenishment_count` int(10) NOT NULL DEFAULT '1' COMMENT 'The number of SKU Items replenished',
+  `date_created` datetime NOT NULL DEFAULT '2020-12-01 16:00:00' COMMENT 'When this record was created',
+  `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'When this record was last updated',
+  PRIMARY KEY (`replenishment_id`),
+  KEY `product_id` (`product_id`),
+  KEY `sku_id` (`sku_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Stores the replenishment events';
 
 
 DROP TABLE IF EXISTS `order_returns`;
-
-CREATE TABLE `order_returns`
-(
-    `return_event_id` INT(10) NOT NULL DEFAULT '0' COMMENT 'Record Identifier',
-    `product_id` INT(10) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the product',
-	`order_line_item_id` INT(10) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the order line item returned',
-    `sku_id` varchar(16) NOT NULL COMMENT 'SKU identifier',
-	`return_count` INT(10) NOT NULL DEFAULT '0' COMMENT 'Number of items returned',
-	`condition` enum('EXCELLENT','DAMAGED') NOT NULL DEFAULT 'EXCELLENT' COMMENT 'The condition` the item was returned',
-    `date_created` DATETIME NOT NULL DEFAULT '2020-12-01 16:00:00' COMMENT 'When this record was created',
-    `date_modified` TIMESTAMP NOT NULL COMMENT 'When this record was last updated',
-    PRIMARY KEY (`return_event_id`),
-	KEY `order_line_item_id` (`order_line_item_id`),
-    KEY `product_id` (`product_id`),
-	KEY `sku_id` (`sku_id`)
-) ENGINE=InnoDB CHARSET=utf8 COMMENT='Stores the order line items returned';
-
-
+CREATE TABLE `order_returns` (
+  `return_event_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Record Identifier',
+  `product_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the product',
+  `order_line_item_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the order line item returned',
+  `sku_id` varchar(16) NOT NULL COMMENT 'SKU identifier',
+  `return_count` int(10) NOT NULL DEFAULT '0' COMMENT 'Number of items returned',
+  `condition` enum('EXCELLENT','DAMAGED') NOT NULL DEFAULT 'EXCELLENT' COMMENT 'The condition` the item was returned',
+  `date_created` datetime NOT NULL DEFAULT '2020-12-01 16:00:00' COMMENT 'When this record was created',
+  `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'When this record was last updated',
+  PRIMARY KEY (`return_event_id`),
+  KEY `order_line_item_id` (`order_line_item_id`),
+  KEY `product_id` (`product_id`),
+  KEY `sku_id` (`sku_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Stores the order line items returned';
