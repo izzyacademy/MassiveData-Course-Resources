@@ -130,6 +130,20 @@ CREATE TABLE `order_items` (
 
 USE inventory;
 
+
+DROP TABLE IF EXISTS `product_inventory_benchmarks`;
+CREATE TABLE `product_inventory_benchmarks` (
+  `product_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the product',
+  `sku_id` varchar(16) NOT NULL COMMENT 'Product SKU identifier',
+  `low_water_mark_count` int(10) NOT NULL DEFAULT '32' COMMENT 'Lowest inventory count that triggers replenishment',
+  `high_water_mark_count` int(10) NOT NULL DEFAULT '512' COMMENT 'Maximum inventory count that stops replenishment',
+  `date_created` datetime NOT NULL DEFAULT '2020-12-01 16:00:00' COMMENT 'When this record was created',
+  `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'When this record was last updated',
+  PRIMARY KEY (`sku_id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Stores the inventory level benchmarks for replenishment events';
+
+--- IN_STOCK means we are above the LWM, out of stock means available count is zero, low inventory means we are above zero but under the LWM
 DROP TABLE IF EXISTS `product_inventory_levels`;
 CREATE TABLE `product_inventory_levels` (
   `sku_id` varchar(16) NOT NULL COMMENT 'Product SKU identifier',
@@ -143,17 +157,7 @@ CREATE TABLE `product_inventory_levels` (
   KEY `status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Stores the inventory levels for each SKU. This is updated in real time by an external process';
 
-DROP TABLE IF EXISTS `product_inventory_benchmarks`;
-CREATE TABLE `product_inventory_benchmarks` (
-  `product_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the product',
-  `sku_id` varchar(16) NOT NULL COMMENT 'Product SKU identifier',
-  `low_water_mark_count` int(10) NOT NULL DEFAULT '32' COMMENT 'Lowest inventory count that triggers replenishment',
-  `high_water_mark_count` int(10) NOT NULL DEFAULT '512' COMMENT 'Maximum inventory count that stops replenishment',
-  `date_created` datetime NOT NULL DEFAULT '2020-12-01 16:00:00' COMMENT 'When this record was created',
-  `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'When this record was last updated',
-  PRIMARY KEY (`sku_id`),
-  KEY `product_id` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Stores the inventory level benchmarks for replenishment events';
+
 
 
 DROP TABLE IF EXISTS `replenishments`;
