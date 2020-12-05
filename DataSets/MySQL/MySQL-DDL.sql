@@ -135,10 +135,12 @@ CREATE TABLE `product_inventory_levels` (
   `sku_id` varchar(16) NOT NULL COMMENT 'Product SKU identifier',
   `product_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the product',
   `available_count` int(10) NOT NULL DEFAULT '1' COMMENT 'Lowest inventory count that triggers replenishment',
+  `status` enum('IN_STOCK','OUT_OF_STOCK', 'LOW_INVENTORY') NOT NULL DEFAULT 'IN_STOCK' COMMENT 'The current inventory level label',
   `date_created` datetime NOT NULL DEFAULT '2020-12-01 16:00:00' COMMENT 'When this record was created',
   `date_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'When this record was last updated',
   PRIMARY KEY (`sku_id`),
-  KEY `product_id` (`product_id`)
+  KEY `product_id` (`product_id`),
+  KEY `status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Stores the inventory levels for each SKU. This is updated in real time by an external process';
 
 DROP TABLE IF EXISTS `product_inventory_benchmarks`;
