@@ -5,7 +5,7 @@ USE inventory;
 TRUNCATE TABLE `product_inventory_benchmarks`;
 
 -- Sets the min and max water levels for each SKU to be generated randomly within each range
-SET @a=32, @b=64, @c=512, @d=1024;
+SET @a=8, @b=16, @c=32, @d=256;
 
 INSERT INTO `product_inventory_benchmarks` (`product_id`, `sku_id`, `low_water_mark_count`, `high_water_mark_count`) VALUES 
 (1001, '1001.6IN', (FLOOR(RAND()*(@b-@a+1))+@a), (FLOOR(RAND()*(@d-@c+1))+@c)),
