@@ -98,7 +98,7 @@ CREATE TABLE `product_suppliers` (
 
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
-  `order_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Uniquely identifies the order',
+  `order_id` bigint(15) NOT NULL AUTO_INCREMENT COMMENT 'Uniquely identifies the order',
   `customer_id` int(10) NOT NULL DEFAULT '25' COMMENT 'Identifies the customer that owns the order',
   `status` enum('FULLFILLMENT','SHIPPED','DELIVERED','CANCELLED','REFUNDED') NOT NULL DEFAULT 'FULLFILLMENT' COMMENT 'Order Status',
   `order_source` enum('WEB','MOBILE','PHONE', 'STORE') NOT NULL DEFAULT 'WEB' COMMENT 'Order Source',
@@ -106,16 +106,16 @@ CREATE TABLE `orders` (
   `date_modified` TIMESTAMP NOT NULL COMMENT 'When this record was last updated',
   PRIMARY KEY (`order_id`),
   KEY `status` (`status`)
-) ENGINE=InnoDB AUTO_INCREMENT=101010 DEFAULT CHARSET=utf8 COMMENT='Used to orders';
+) ENGINE=InnoDB AUTO_INCREMENT=10101010 DEFAULT CHARSET=utf8 COMMENT='Used to orders';
 
 
 DROP TABLE IF EXISTS `order_items`;
 CREATE TABLE `order_items` (
-  `order_line_item_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Uniquely identifies the order',
+  `order_line_item_id` bigint(15) NOT NULL AUTO_INCREMENT COMMENT 'Uniquely identifies the order',
   `item_count` int(10) NOT NULL DEFAULT '1' COMMENT 'Number of items in the order',
   `sku_id` varchar(16) NOT NULL COMMENT 'Product SKU identifier',
   `product_id` int(10) NOT NULL COMMENT 'Product identifier',
-  `order_id` int(10) NOT NULL COMMENT 'Order identifier',
+  `order_id` bigint(15) NOT NULL COMMENT 'Order identifier',
   `status` enum('ORDERED','RETURNED') NOT NULL DEFAULT 'ORDERED' COMMENT 'Order Line Item Status',
   `date_created` DATETIME NOT NULL DEFAULT '2020-01-01 16:00:00' COMMENT 'When this record was created',
   `date_modified` TIMESTAMP NOT NULL COMMENT 'When this record was last updated',
@@ -124,7 +124,7 @@ CREATE TABLE `order_items` (
   KEY `product_id` (`product_id`),
   KEY `sku_id` (`sku_id`),
   KEY `status` (`status`)
-) ENGINE=InnoDB AUTO_INCREMENT=403020 DEFAULT CHARSET=utf8 COMMENT='products ordered within a specific order';
+) ENGINE=InnoDB AUTO_INCREMENT=20202020 DEFAULT CHARSET=utf8 COMMENT='products ordered within a specific order';
 
 
 
@@ -162,7 +162,7 @@ CREATE TABLE `product_inventory_levels` (
 
 DROP TABLE IF EXISTS `replenishments`;
 CREATE TABLE `replenishments` (
-  `replenishment_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Record Identifier',
+  `replenishment_id` bigint(15) NOT NULL AUTO_INCREMENT COMMENT 'Record Identifier',
   `product_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the product',
   `sku_id` varchar(16) NOT NULL COMMENT 'SKU identifier',
   `replenishment_count` int(10) NOT NULL DEFAULT '1' COMMENT 'The number of SKU Items replenished',
@@ -176,9 +176,9 @@ CREATE TABLE `replenishments` (
 
 DROP TABLE IF EXISTS `order_returns`;
 CREATE TABLE `order_returns` (
-  `return_event_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Record Identifier',
+  `return_event_id` bigint(15) NOT NULL AUTO_INCREMENT COMMENT 'Record Identifier',
   `product_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the product',
-  `order_line_item_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the order line item returned',
+  `order_line_item_id` bigint(15) NOT NULL DEFAULT '0' COMMENT 'Uniquely identifies the order line item returned',
   `sku_id` varchar(16) NOT NULL COMMENT 'SKU identifier',
   `return_count` int(10) NOT NULL DEFAULT '0' COMMENT 'Number of items returned',
   `condition` enum('EXCELLENT','DAMAGED') NOT NULL DEFAULT 'EXCELLENT' COMMENT 'The condition` the item was returned',
