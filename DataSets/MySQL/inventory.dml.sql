@@ -4,6 +4,7 @@ USE inventory;
 
 TRUNCATE TABLE `product_inventory_benchmarks`;
 
+-- @a and @b are the min and max for the LWM; @c and @d are the min and max for the HWM
 -- Sets the min and max water levels for each SKU to be generated randomly within each range
 SET @a=8, @b=16, @c=32, @d=256;
 
