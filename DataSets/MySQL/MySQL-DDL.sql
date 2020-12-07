@@ -1,4 +1,5 @@
 
+--- Switch database to ecommerce
 USE ecommerce;
 
 DROP TABLE IF EXISTS `customers`;
@@ -99,7 +100,7 @@ CREATE TABLE `product_suppliers` (
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `order_id` bigint(15) NOT NULL AUTO_INCREMENT COMMENT 'Uniquely identifies the order',
-  `customer_id` int(10) NOT NULL DEFAULT '25' COMMENT 'Identifies the customer that owns the order',
+  `customer_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Identifies the customer that owns the order',
   `status` enum('FULLFILLMENT','SHIPPED','DELIVERED','CANCELLED','REFUNDED') NOT NULL DEFAULT 'FULLFILLMENT' COMMENT 'Order Status',
   `order_source` enum('WEB','MOBILE','PHONE', 'STORE') NOT NULL DEFAULT 'WEB' COMMENT 'Order Source',
   `date_created` DATETIME NOT NULL DEFAULT '2020-01-01 16:00:00' COMMENT 'When this record was created',
@@ -116,20 +117,20 @@ CREATE TABLE `order_items` (
   `sku_id` varchar(16) NOT NULL COMMENT 'Product SKU identifier',
   `product_id` int(10) NOT NULL COMMENT 'Product identifier',
   `order_id` bigint(15) NOT NULL COMMENT 'Order identifier',
+  `customer_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Identifies the customer that owns the order',
   `status` enum('ORDERED','RETURNED') NOT NULL DEFAULT 'ORDERED' COMMENT 'Order Line Item Status',
   `date_created` DATETIME NOT NULL DEFAULT '2020-01-01 16:00:00' COMMENT 'When this record was created',
   `date_modified` TIMESTAMP NOT NULL COMMENT 'When this record was last updated',
   PRIMARY KEY (`order_line_item_id`),
+  KEY `customer_id` (`customer_id`),
   KEY `order_id` (`order_id`),
   KEY `product_id` (`product_id`),
   KEY `sku_id` (`sku_id`),
   KEY `status` (`status`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20202020 DEFAULT CHARSET=utf8 COMMENT='products ordered within a specific order';
 
-
-
+--- Swith database to inventory
 USE inventory;
-
 
 DROP TABLE IF EXISTS `product_inventory_benchmarks`;
 CREATE TABLE `product_inventory_benchmarks` (
@@ -158,8 +159,6 @@ CREATE TABLE `product_inventory_levels` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Stores the inventory levels for each SKU. This is updated in real time by an external process';
 
 
-
-
 DROP TABLE IF EXISTS `replenishments`;
 CREATE TABLE `replenishments` (
   `replenishment_id` bigint(15) NOT NULL AUTO_INCREMENT COMMENT 'Record Identifier',
@@ -172,7 +171,6 @@ CREATE TABLE `replenishments` (
   KEY `product_id` (`product_id`),
   KEY `sku_id` (`sku_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Stores the replenishment events';
-
 
 DROP TABLE IF EXISTS `order_returns`;
 CREATE TABLE `order_returns` (
