@@ -114,9 +114,9 @@ DROP TABLE IF EXISTS `order_items`;
 CREATE TABLE `order_items` (
   `order_line_item_id` bigint(15) NOT NULL AUTO_INCREMENT COMMENT 'Uniquely identifies the order',
   `item_count` int(10) NOT NULL DEFAULT '1' COMMENT 'Number of items in the order',
-  `sku_id` varchar(16) NOT NULL COMMENT 'Product SKU identifier',
-  `product_id` int(10) NOT NULL COMMENT 'Product identifier',
-  `order_id` bigint(15) NOT NULL COMMENT 'Order identifier',
+  `sku_id` varchar(16) NOT NULL DEFAULT '' COMMENT 'Product SKU identifier',
+  `product_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Product identifier',
+  `order_id` bigint(15) NOT NULL DEFAULT '0'  COMMENT 'Order identifier',
   `customer_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Identifies the customer that owns the order',
   `status` enum('ORDERED','RETURNED') NOT NULL DEFAULT 'ORDERED' COMMENT 'Order Line Item Status',
   `date_created` DATETIME NOT NULL DEFAULT '2020-01-01 16:00:00' COMMENT 'When this record was created',
