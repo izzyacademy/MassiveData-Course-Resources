@@ -101,7 +101,7 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `order_id` bigint(15) NOT NULL AUTO_INCREMENT COMMENT 'Uniquely identifies the order',
   `customer_id` int(10) NOT NULL DEFAULT '0' COMMENT 'Identifies the customer that owns the order',
-  `status` enum('FULLFILLMENT','SHIPPED','DELIVERED','CANCELLED','REFUNDED') NOT NULL DEFAULT 'FULLFILLMENT' COMMENT 'Order Status',
+  `status` enum('FULFILLMENT','SHIPPED','DELIVERED','CANCELLED','REFUNDED') NOT NULL DEFAULT 'FULFILLMENT' COMMENT 'Order Status',
   `order_source` enum('WEB','MOBILE','PHONE', 'STORE') NOT NULL DEFAULT 'WEB' COMMENT 'Order Source',
   `date_created` DATETIME NOT NULL DEFAULT '2020-01-01 16:00:00' COMMENT 'When this record was created',
   `date_modified` TIMESTAMP NOT NULL COMMENT 'When this record was last updated',
