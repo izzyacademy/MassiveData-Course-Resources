@@ -1,0 +1,1706 @@
+{
+	"info": {
+		"_postman_id": "57aaf64f-2a24-4648-8d96-e76c31c89ba6",
+		"name": "IzzyAcademy REST API Interactions",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "REST_PROXY",
+			"item": [
+				{
+					"name": "LIST_TOPICS",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.kafka.v2+json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{kafka-restproxy-host}}:8082/topics",
+							"protocol": "http",
+							"host": [
+								"{{kafka-restproxy-host}}"
+							],
+							"port": "8082",
+							"path": [
+								"topics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET TOPIC DETAILS - RIVER CONNECT OFFSETS",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/vnd.kafka.v2+json"
+							}
+						],
+						"url": {
+							"raw": "http://{{kafka-restproxy-host}}:8082/topics/river-connect-offsets",
+							"protocol": "http",
+							"host": [
+								"{{kafka-restproxy-host}}"
+							],
+							"port": "8082",
+							"path": [
+								"topics",
+								"river-connect-offsets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET TOPIC DETAILS - PRODUCTS",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/vnd.kafka.v2+json"
+							}
+						],
+						"url": {
+							"raw": "http://{{kafka-restproxy-host}}:8082/topics/estreams64.ecommerce.products",
+							"protocol": "http",
+							"host": [
+								"{{kafka-restproxy-host}}"
+							],
+							"port": "8082",
+							"path": [
+								"topics",
+								"estreams64.ecommerce.products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET TOPIC DETAILS - PRODUCT DETAILS",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/vnd.kafka.v2+json"
+							}
+						],
+						"url": {
+							"raw": "http://{{kafka-restproxy-host}}:8082/topics/estreams64.ecommerce.product_details",
+							"protocol": "http",
+							"host": [
+								"{{kafka-restproxy-host}}"
+							],
+							"port": "8082",
+							"path": [
+								"topics",
+								"estreams64.ecommerce.product_details"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "KAFKA_CONNECT",
+			"item": [
+				{
+					"name": "LIST CONNECTOR PLUGINS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connector-plugins",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connector-plugins"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LIST CONNECTORS",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connectors",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connectors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE PRODUCTS SOURCE CONNECTOR",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"ecommerce-product-streams-64\",\n    \"config\": {\n      \"connector.class\": \"io.debezium.connector.mysql.MySqlConnector\",\n      \"database.hostname\": \"mysql-external.mysql56.svc.cluster.local\",\n      \"database.port\": \"3306\",\n      \"database.user\": \"debezium\",\n      \"database.password\": \"db3k4Cc\",\n      \"database.server.id\": \"64\",\n      \"database.server.name\": \"estreams64\",\n      \"table.whitelist\" : \"ecommerce.products,ecommerce.product_details\",\n      \"database.history.kafka.bootstrap.servers\": \"broker1-internal:9092\",\n      \"database.history.kafka.topic\": \"dbhistory.estreams64\",\n      \"include.schema.changes\": \"false\",\n      \"transforms\": \"unwrap,extractkey\",\n      \"transforms.unwrap.type\" : \"io.debezium.transforms.ExtractNewRecordState\",\n      \"transforms.extractkey.type\": \"org.apache.kafka.connect.transforms.ExtractField$Key\",\n      \"transforms.extractkey.field\": \"product_id\",\n      \"key.converter\": \"org.apache.kafka.connect.converters.IntegerConverter\",\n      \"value.converter\": \"io.confluent.connect.avro.AvroConverter\",\n      \"value.converter.schema.registry.url\": \"http://schemaregistry-internal:8081\"\n    }\n  }",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connectors",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connectors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE PRODUCTS SOURCE CONNECTOR #2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"ecommerce-product-streams-65\",\n    \"config\": {\n      \"connector.class\": \"io.debezium.connector.mysql.MySqlConnector\",\n      \"database.hostname\": \"mysql-external.mysql56.svc.cluster.local\",\n      \"database.port\": \"3306\",\n      \"database.user\": \"debezium\",\n      \"database.password\": \"db3k4Cc\",\n      \"database.server.id\": \"65\",\n      \"database.server.name\": \"estreams65\",\n      \"table.whitelist\" : \"ecommerce.products,ecommerce.product_details,ecommerce.product_skus\",\n      \"database.history.kafka.bootstrap.servers\": \"broker1-internal:9092\",\n      \"database.history.kafka.topic\": \"dbhistory.estreams65\",\n      \"include.schema.changes\": \"false\",\n      \"transforms\": \"unwrap,createkey,extractkey\",\n      \"transforms.unwrap.type\" : \"io.debezium.transforms.ExtractNewRecordState\",\n      \"transforms.createkey.type\":\"org.apache.kafka.connect.transforms.ValueToKey\",\n      \"transforms.createkey.fields\":\"product_id\",\n      \"transforms.extractkey.type\": \"org.apache.kafka.connect.transforms.ExtractField$Key\",\n      \"transforms.extractkey.field\": \"product_id\",\n      \"key.converter\": \"org.apache.kafka.connect.converters.IntegerConverter\",\n      \"value.converter\": \"io.confluent.connect.avro.AvroConverter\",\n      \"value.converter.schema.registry.url\": \"http://schemaregistry-internal:8081\"\n    }\n  }",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connectors",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connectors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE CUSTOMER ORDERS SOURCE CONNECTOR",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"ecommerce-product-streams-75\",\n    \"config\": {\n      \"connector.class\": \"io.debezium.connector.mysql.MySqlConnector\",\n      \"database.hostname\": \"mysql-external.mysql56.svc.cluster.local\",\n      \"database.port\": \"3306\",\n      \"database.user\": \"debezium\",\n      \"database.password\": \"db3k4Cc\",\n      \"database.server.id\": \"75\",\n      \"database.server.name\": \"estreams75\",\n      \"table.whitelist\" : \"ecommerce.customers,ecommerce.customer_addresses,ecommerce.orders,ecommerce.order_items\",\n      \"database.history.kafka.bootstrap.servers\": \"broker1-internal:9092\",\n      \"database.history.kafka.topic\": \"dbhistory.estreams64\",\n      \"include.schema.changes\": \"false\",\n      \"transforms\": \"unwrap,createkey,extractkey\",\n      \"transforms.unwrap.type\" : \"io.debezium.transforms.ExtractNewRecordState\",\n      \"transforms.createkey.type\":\"org.apache.kafka.connect.transforms.ValueToKey\",\n      \"transforms.createkey.fields\":\"customer_id\",\n      \"transforms.extractkey.type\": \"org.apache.kafka.connect.transforms.ExtractField$Key\",\n      \"transforms.extractkey.field\": \"customer_id\",\n      \"key.converter\": \"org.apache.kafka.connect.converters.IntegerConverter\",\n      \"value.converter\": \"io.confluent.connect.avro.AvroConverter\",\n      \"value.converter.schema.registry.url\": \"http://schemaregistry-internal:8081\"\n    }\n  }",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connectors",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connectors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE ENRICHMENT1 SINK CONNECTOR",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"elasticsearch-product-streams\",\n  \"config\": {\n    \"connector.class\": \"io.confluent.connect.elasticsearch.ElasticsearchSinkConnector\",\n    \"connection.url\": \"http://elasticsearch-external.default.svc.cluster.local:9200\",\n    \"connection.username\": \"elastic\",\n    \"connection.password\": \"LlM9694fDWlrA806P36P4kSJ\",\n    \"type.name\": \"_doc\",\n    \"elastic.security.protocol\": \"PLAINTEXT\",\n    \"auto.create.indices.at.start\": \"true\",\n    \"topics\" : \"estreams64.ecommerce.products,estreams64.ecommerce.product_details,estreams64.ecommerce.products_enriched,estreams64.ecommerce.products_enriched1,estreams64.ecommerce.products_enriched2,estreams64.ecommerce.products_enriched3\",\n    \"write.method\": \"upsert\",\n    \"behavior.on.null.values\": \"delete\",\n    \"behavior.on.malformed.documents\": \"ignore\",\n    \"drop.invalid.message\": \"true\",\n    \"read.timeout.ms\": \"15000\",\n    \"flush.timeout.ms\": \"15000\",\n    \"batch.size\": \"128\",\n    \"schema.ignore\" : \"true\",\n    \"key.converter\": \"org.apache.kafka.connect.converters.IntegerConverter\",\n    \"value.converter\": \"io.confluent.connect.avro.AvroConverter\",\n    \"value.converter.schema.registry.url\": \"http://schemaregistry-internal:8081\"\n  }\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connectors",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connectors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET PRODUCTS CONNECTOR DETAILS",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connectors/ecommerce-product-streams-64",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connectors",
+								"ecommerce-product-streams-64"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ENRICHMENT CONNECTOR DETAILS",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connectors/elasticsearch-product-streams",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connectors",
+								"elasticsearch-product-streams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE ENRICHMENT CONNECTOR",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connectors/elasticsearch-product-streams",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connectors",
+								"elasticsearch-product-streams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET PRODUCTS CONNECTOR STATUS",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connectors/ecommerce-product-streams-64/status",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connectors",
+								"ecommerce-product-streams-64",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET PRODUCTS CONNECTOR #2 STATUS",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connectors/ecommerce-product-streams-65/status",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connectors",
+								"ecommerce-product-streams-65",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET CUSTOMER ORDERS CONNECTOR STATUS",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connectors/ecommerce-product-streams-75/status",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connectors",
+								"ecommerce-product-streams-75",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ENRICHMENT SINK CONNECTOR STATUS",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connectors/elasticsearch-product-streams/status",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connectors",
+								"elasticsearch-product-streams",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET PRODUCTS CONNECTOR CONFIG",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connectors/ecommerce-product-streams-64/config",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connectors",
+								"ecommerce-product-streams-64",
+								"config"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE PRODUCTS CONNECTOR CONFIG",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"connector.class\": \"io.debezium.connector.mysql.MySqlConnector\",\n    \"database.user\": \"debezium\",\n    \"database.server.id\": \"64\",\n    \"database.history.kafka.bootstrap.servers\": \"broker1-internal:9092\",\n    \"database.history.kafka.topic\": \"dbhistory.estreams64\",\n    \"transforms\": \"unwrap,extractkey\",\n    \"database.server.name\": \"estreams64\",\n    \"database.port\": \"3306\",\n    \"include.schema.changes\": \"false\",\n    \"table.whitelist\": \"ecommerce.products,ecommerce.product_details\",\n    \"transforms.extractkey.field\": \"product_id\",\n    \"value.converter.schema.registry.url\": \"http://schemaregistry-internal:8081\",\n    \"database.hostname\": \"mysql-external.mysql56.svc.cluster.local\",\n    \"database.password\": \"db3k4Cc\",\n    \"transforms.extractkey.type\": \"org.apache.kafka.connect.transforms.ExtractField$Key\",\n    \"name\": \"ecommerce-product-streams-64\",\n    \"transforms.unwrap.type\": \"io.debezium.transforms.ExtractNewRecordState\",\n    \"value.converter\": \"io.confluent.connect.avro.AvroConverter\",\n    \"key.converter\": \"org.apache.kafka.connect.converters.IntegerConverter\"\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connectors/ecommerce-product-streams-64/config",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connectors",
+								"ecommerce-product-streams-64",
+								"config"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE ENRICHMENT SINK CONNECTOR CONFIG",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"connector.class\": \"io.confluent.connect.elasticsearch.ElasticsearchSinkConnector\",\n    \"connection.url\": \"http://elasticsearch-external.default.svc.cluster.local:9200\",\n    \"connection.username\": \"elastic\",\n    \"connection.password\": \"LlM9694fDWlrA806P36P4kSJ\",\n    \"type.name\": \"_doc\",\n    \"elastic.security.protocol\": \"PLAINTEXT\",\n    \"auto.create.indices.at.start\": \"true\",\n    \"topics\" : \"estreams64.ecommerce.products,estreams64.ecommerce.product_details,estreams64.ecommerce.products_enriched,estreams64.ecommerce.products_enriched1,estreams64.ecommerce.products_enriched2,estreams64.ecommerce.products_enriched3\",\n    \"write.method\": \"upsert\",\n    \"behavior.on.null.values\": \"delete\",\n    \"behavior.on.malformed.documents\": \"ignore\",\n    \"drop.invalid.message\": \"true\",\n    \"read.timeout.ms\": \"15000\",\n    \"flush.timeout.ms\": \"15000\",\n    \"batch.size\": \"128\",\n    \"schema.ignore\" : \"true\",\n    \"key.converter\": \"org.apache.kafka.connect.converters.IntegerConverter\",\n    \"value.converter\": \"io.confluent.connect.avro.AvroConverter\",\n    \"value.converter.schema.registry.url\": \"http://schemaregistry-internal:8081\"\n  }",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connectors/elasticsearch-product-streams/config",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connectors",
+								"elasticsearch-product-streams",
+								"config"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ELASTICSEARCH",
+			"item": [
+				{
+					"name": "CREATE PRODUCTS INDEX",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{elastic-username}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{elastic-password}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"settings\": {\r\n    \"index\": {\r\n      \"number_of_shards\": 1,\r\n      \"number_of_replicas\": 1,\r\n      \"analysis\": {\r\n        \"analyzer\": {\r\n          \"synonym\": {\r\n            \"tokenizer\": \"standard\",\r\n            \"filter\": [\r\n              \"stop\",\r\n              \"synonym\"\r\n            ]\r\n          }\r\n        },\r\n        \"filter\": {\r\n          \"izzystop\": {\r\n            \"type\": \"stop\",\r\n            \"stopwords\": [\r\n              \"the\",\r\n              \"is\"\r\n            ]\r\n          },\r\n          \"synonym\": {\r\n            \"type\": \"synonym\",\r\n            \"lenient\": true,\r\n            \"expand\": true,\r\n            \"synonyms\": [\r\n              \"lift => elevator\",\r\n              \"speed, velocity\",\r\n              \"cookies, buscuit\",\r\n              \"holiday, vacation\",\r\n              \"xmas, christmas\",\r\n              \"soda, pop, soft drink\",\r\n              \"soccer, football\"\r\n            ]\r\n          }\r\n        }\r\n      }\r\n    }\r\n  },\r\n  \"mappings\": {\r\n    \"properties\": {\r\n      \"product_id\": {\r\n        \"type\": \"integer\"\r\n      },\r\n      \"name\": {\r\n        \"type\": \"keyword\"\r\n      },\r\n      \"long_description\": {\r\n        \"type\": \"text\",\r\n        \"index\": true,\r\n        \"analyzer\": \"synonym\"\r\n      },\r\n      \"department\": {\r\n        \"type\": \"text\",\r\n        \"index\": true\r\n      }\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{elastic-protocol}}://{{elasticsearch-host}}:9200/products",
+							"protocol": "{{elastic-protocol}}",
+							"host": [
+								"{{elasticsearch-host}}"
+							],
+							"port": "9200",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REMOVE PRODUCTS INDEX",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{elastic-username}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{elastic-password}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"settings\": {\r\n    \"index\": {\r\n      \"number_of_shards\": 1,\r\n      \"number_of_replicas\": 1,\r\n      \"analysis\": {\r\n        \"analyzer\": {\r\n          \"synonym\": {\r\n            \"tokenizer\": \"standard\",\r\n            \"filter\": [\r\n              \"stop\",\r\n              \"synonym\"\r\n            ]\r\n          }\r\n        },\r\n        \"filter\": {\r\n          \"izzystop\": {\r\n            \"type\": \"stop\",\r\n            \"stopwords\": [\r\n              \"the\",\r\n              \"is\"\r\n            ]\r\n          },\r\n          \"synonym\": {\r\n            \"type\": \"synonym\",\r\n            \"lenient\": true,\r\n            \"expand\": true,\r\n            \"synonyms\": [\r\n              \"lift => elevator\",\r\n              \"speed, velocity\",\r\n              \"cookies, buscuit\",\r\n              \"holiday, vacation\",\r\n              \"xmas, christmas\",\r\n              \"soda, pop, soft drink\",\r\n              \"soccer, football\"\r\n            ]\r\n          }\r\n        }\r\n      }\r\n    }\r\n  },\r\n  \"mappings\": {\r\n    \"properties\": {\r\n      \"product_id\": {\r\n        \"type\": \"integer\"\r\n      },\r\n      \"name\": {\r\n        \"type\": \"keyword\"\r\n      },\r\n      \"long_description\": {\r\n        \"type\": \"text\",\r\n        \"index\": true,\r\n        \"analyzer\": \"synonym\"\r\n      },\r\n      \"department\": {\r\n        \"type\": \"text\",\r\n        \"index\": true\r\n      }\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{elastic-protocol}}://{{elasticsearch-host}}:9200/products",
+							"protocol": "{{elastic-protocol}}",
+							"host": [
+								"{{elasticsearch-host}}"
+							],
+							"port": "9200",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REMOVE CONNECT INDICES",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{elastic-username}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{elastic-password}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"settings\": {\r\n    \"index\": {\r\n      \"number_of_shards\": 1,\r\n      \"number_of_replicas\": 1,\r\n      \"analysis\": {\r\n        \"analyzer\": {\r\n          \"synonym\": {\r\n            \"tokenizer\": \"standard\",\r\n            \"filter\": [\r\n              \"stop\",\r\n              \"synonym\"\r\n            ]\r\n          }\r\n        },\r\n        \"filter\": {\r\n          \"izzystop\": {\r\n            \"type\": \"stop\",\r\n            \"stopwords\": [\r\n              \"the\",\r\n              \"is\"\r\n            ]\r\n          },\r\n          \"synonym\": {\r\n            \"type\": \"synonym\",\r\n            \"lenient\": true,\r\n            \"expand\": true,\r\n            \"synonyms\": [\r\n              \"lift => elevator\",\r\n              \"speed, velocity\",\r\n              \"cookies, buscuit\",\r\n              \"holiday, vacation\",\r\n              \"xmas, christmas\",\r\n              \"soda, pop, soft drink\",\r\n              \"soccer, football\"\r\n            ]\r\n          }\r\n        }\r\n      }\r\n    }\r\n  },\r\n  \"mappings\": {\r\n    \"properties\": {\r\n      \"product_id\": {\r\n        \"type\": \"integer\"\r\n      },\r\n      \"name\": {\r\n        \"type\": \"keyword\"\r\n      },\r\n      \"long_description\": {\r\n        \"type\": \"text\",\r\n        \"index\": true,\r\n        \"analyzer\": \"synonym\"\r\n      },\r\n      \"department\": {\r\n        \"type\": \"text\",\r\n        \"index\": true\r\n      }\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{elastic-protocol}}://{{elasticsearch-host}}:9200/products,estreams64*",
+							"protocol": "{{elastic-protocol}}",
+							"host": [
+								"{{elasticsearch-host}}"
+							],
+							"port": "9200",
+							"path": [
+								"products,estreams64*"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LIST INDICES",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{elastic-username}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{elastic-password}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"settings\": {\r\n    \"index\": {\r\n      \"number_of_shards\": 1,\r\n      \"number_of_replicas\": 1,\r\n      \"analysis\": {\r\n        \"analyzer\": {\r\n          \"synonym\": {\r\n            \"tokenizer\": \"standard\",\r\n            \"filter\": [\r\n              \"stop\",\r\n              \"synonym\"\r\n            ]\r\n          }\r\n        },\r\n        \"filter\": {\r\n          \"izzystop\": {\r\n            \"type\": \"stop\",\r\n            \"stopwords\": [\r\n              \"the\",\r\n              \"is\"\r\n            ]\r\n          },\r\n          \"synonym\": {\r\n            \"type\": \"synonym\",\r\n            \"lenient\": true,\r\n            \"expand\": true,\r\n            \"synonyms\": [\r\n              \"lift => elevator\",\r\n              \"speed, velocity\",\r\n              \"cookies, buscuit\",\r\n              \"holiday, vacation\",\r\n              \"xmas, christmas\",\r\n              \"soda, pop, soft drink\",\r\n              \"soccer, football\"\r\n            ]\r\n          }\r\n        }\r\n      }\r\n    }\r\n  },\r\n  \"mappings\": {\r\n    \"properties\": {\r\n      \"product_id\": {\r\n        \"type\": \"integer\"\r\n      },\r\n      \"name\": {\r\n        \"type\": \"keyword\"\r\n      },\r\n      \"long_description\": {\r\n        \"type\": \"text\",\r\n        \"index\": true,\r\n        \"analyzer\": \"synonym\"\r\n      },\r\n      \"department\": {\r\n        \"type\": \"text\",\r\n        \"index\": true\r\n      }\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{elastic-protocol}}://{{elasticsearch-host}}:9200/products,estreams64*",
+							"protocol": "{{elastic-protocol}}",
+							"host": [
+								"{{elasticsearch-host}}"
+							],
+							"port": "9200",
+							"path": [
+								"products,estreams64*"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE DOCUMENT - PRODUCT",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{elastic-password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{elastic-username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"product_id\": 1000,\r\n  \"name\": \"Cold Orange Soda\",\r\n  \"department\" : \"beverage\",\r\n  \"long_description\": \"This is a great soda that goes well with cookies when you are relaxing and watching a soccer game\"\r\n}"
+						},
+						"url": {
+							"raw": "{{elastic-protocol}}://{{elasticsearch-host}}:9200/products/_doc?",
+							"protocol": "{{elastic-protocol}}",
+							"host": [
+								"{{elasticsearch-host}}"
+							],
+							"port": "9200",
+							"path": [
+								"products",
+								"_doc"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE DOCUMENT WITH TIMESTAMP - PRODUCT",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{elastic-password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{elastic-username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"product_id\": 1001,\r\n  \"name\": \"Cold Orange Soda\",\r\n  \"department\" : \"beverage\",\r\n  \"long_description\": \"This is a great soda that goes well with cookies when you are relaxing and watching a soccer game\",\r\n  \"@timestamp\": \"2020-12-01T13:12:00\"\r\n}"
+						},
+						"url": {
+							"raw": "{{elastic-protocol}}://{{elasticsearch-host}}:9200/products/_doc?",
+							"protocol": "{{elastic-protocol}}",
+							"host": [
+								"{{elasticsearch-host}}"
+							],
+							"port": "9200",
+							"path": [
+								"products",
+								"_doc"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE OR UPDATE DOCUMENT - PRODUCT",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{elastic-password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{elastic-username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"product_id\": 1000,\r\n  \"name\": \"Cold Orange Soda\",\r\n  \"department\" : \"beverage\",\r\n  \"long_description\": \"This is a great soda that goes well with cookies when you are relaxing and watching a soccer game\",\r\n  \"@timestamp\": \"2020-12-02T13:12:00\"\r\n}"
+						},
+						"url": {
+							"raw": "{{elastic-protocol}}://{{elasticsearch-host}}:9200/products/_doc/1000",
+							"protocol": "{{elastic-protocol}}",
+							"host": [
+								"{{elasticsearch-host}}"
+							],
+							"port": "9200",
+							"path": [
+								"products",
+								"_doc",
+								"1000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SEARCH INDEX - PRODUCT",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{elastic-password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{elastic-username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"query\": {\r\n    \"match\": {\r\n      \"long_description\": {\r\n        \"query\": \"pop\"\r\n      }\r\n    }\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "{{elastic-protocol}}://{{elasticsearch-host}}:9200/products/_search",
+							"protocol": "{{elastic-protocol}}",
+							"host": [
+								"{{elasticsearch-host}}"
+							],
+							"port": "9200",
+							"path": [
+								"products",
+								"_search"
+							],
+							"query": [
+								{
+									"key": "pretty",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "WEB API REST ENDPOINTS",
+			"item": [
+				{
+					"name": "LIST PRODUCTS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/products",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LIST DEPARTMENTS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/departments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"departments"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ZOOKEEPER ADMIN API",
+			"item": [
+				{
+					"name": "LIST COMMANDS",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/html",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{zookeeper-host}}:8080/commands",
+							"protocol": "http",
+							"host": [
+								"{{zookeeper-host}}"
+							],
+							"port": "8080",
+							"path": [
+								"commands"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET STATS",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{zookeeper-host}}:8080/commands/stats",
+							"protocol": "http",
+							"host": [
+								"{{zookeeper-host}}"
+							],
+							"port": "8080",
+							"path": [
+								"commands",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET DUMP",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{zookeeper-host}}:8080/commands/dump",
+							"protocol": "http",
+							"host": [
+								"{{zookeeper-host}}"
+							],
+							"port": "8080",
+							"path": [
+								"commands",
+								"dump"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET DIRS",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{zookeeper-host}}:8080/commands/dirs",
+							"protocol": "http",
+							"host": [
+								"{{zookeeper-host}}"
+							],
+							"port": "8080",
+							"path": [
+								"commands",
+								"dirs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET SERVER STATS",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{zookeeper-host}}:8080/commands/server_stats",
+							"protocol": "http",
+							"host": [
+								"{{zookeeper-host}}"
+							],
+							"port": "8080",
+							"path": [
+								"commands",
+								"server_stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET CONNECTIONS",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{zookeeper-host}}:8080/commands/connections",
+							"protocol": "http",
+							"host": [
+								"{{zookeeper-host}}"
+							],
+							"port": "8080",
+							"path": [
+								"commands",
+								"connections"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET WATCHES BY PATH",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{zookeeper-host}}:8080/commands/watches_by_path",
+							"protocol": "http",
+							"host": [
+								"{{zookeeper-host}}"
+							],
+							"port": "8080",
+							"path": [
+								"commands",
+								"watches_by_path"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET WATCHES SUMMARY",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://{{zookeeper-host}}:8080/commands/watch_summary",
+							"protocol": "http",
+							"host": [
+								"{{zookeeper-host}}"
+							],
+							"port": "8080",
+							"path": [
+								"commands",
+								"watch_summary"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET WATCHES",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://{{zookeeper-host}}:8080/commands/watches",
+							"protocol": "http",
+							"host": [
+								"{{zookeeper-host}}"
+							],
+							"port": "8080",
+							"path": [
+								"commands",
+								"watches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET CONFIGURATION",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://{{zookeeper-host}}:8080/commands/configuration",
+							"protocol": "http",
+							"host": [
+								"{{zookeeper-host}}"
+							],
+							"port": "8080",
+							"path": [
+								"commands",
+								"configuration"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "SCHEMA REGISTRY",
+			"item": [
+				{
+					"name": "LIST SUBJECTS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{confluent-schemaregistry-host}}:8081/subjects",
+							"protocol": "http",
+							"host": [
+								"{{confluent-schemaregistry-host}}"
+							],
+							"port": "8081",
+							"path": [
+								"subjects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET PRODUCTS VALUE VERSIONS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{confluent-schemaregistry-host}}:8081/subjects/estreams64.ecommerce.products-value/versions",
+							"protocol": "http",
+							"host": [
+								"{{confluent-schemaregistry-host}}"
+							],
+							"port": "8081",
+							"path": [
+								"subjects",
+								"estreams64.ecommerce.products-value",
+								"versions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET PRODUCTS VALUE VERSION DETAILS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{confluent-schemaregistry-host}}:8081/subjects/estreams64.ecommerce.products-value/versions/1",
+							"protocol": "http",
+							"host": [
+								"{{confluent-schemaregistry-host}}"
+							],
+							"port": "8081",
+							"path": [
+								"subjects",
+								"estreams64.ecommerce.products-value",
+								"versions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REGISTER PRODUCTS ENRICHED SCHEMA",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"schema\": \"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"Value\\\",\\\"namespace\\\":\\\"estreams64.ecommerce.product_enriched\\\",\\\"fields\\\":[{\\\"name\\\":\\\"product_id\\\",\\\"type\\\":{\\\"type\\\":\\\"int\\\",\\\"connect.default\\\":0},\\\"default\\\":0},{\\\"name\\\":\\\"name\\\",\\\"type\\\":{\\\"type\\\":\\\"string\\\",\\\"connect.default\\\":\\\"\\\"},\\\"default\\\":\\\"\\\"},{\\\"name\\\":\\\"department\\\",\\\"type\\\":{\\\"type\\\":\\\"int\\\",\\\"connect.default\\\":0},\\\"default\\\":0},{\\\"name\\\":\\\"long_description\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"date_created\\\",\\\"type\\\":{\\\"type\\\":\\\"long\\\",\\\"connect.version\\\":1,\\\"connect.default\\\":1577894400000,\\\"connect.name\\\":\\\"io.debezium.time.Timestamp\\\"},\\\"default\\\":1577894400000},{\\\"name\\\":\\\"date_modified\\\",\\\"type\\\":{\\\"type\\\":\\\"string\\\",\\\"connect.version\\\":1,\\\"connect.default\\\":\\\"1970-01-01T00:00:00Z\\\",\\\"connect.name\\\":\\\"io.debezium.time.ZonedTimestamp\\\"},\\\"default\\\":\\\"1970-01-01T00:00:00Z\\\"}],\\\"connect.name\\\":\\\"estreams64.ecommerce.product_enriched.Value\\\"}\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{confluent-schemaregistry-host}}:8081/subjects/estreams64.ecommerce.product_enriched-value/versions",
+							"protocol": "http",
+							"host": [
+								"{{confluent-schemaregistry-host}}"
+							],
+							"port": "8081",
+							"path": [
+								"subjects",
+								"estreams64.ecommerce.product_enriched-value",
+								"versions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REMOVE SAMPLE SCHEMA",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"schema\": \"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"Value\\\",\\\"namespace\\\":\\\"estreams64.ecommerce.product_enriched\\\",\\\"fields\\\":[{\\\"name\\\":\\\"product_id\\\",\\\"type\\\":{\\\"type\\\":\\\"int\\\",\\\"connect.default\\\":0},\\\"default\\\":0},{\\\"name\\\":\\\"name\\\",\\\"type\\\":{\\\"type\\\":\\\"string\\\",\\\"connect.default\\\":\\\"\\\"},\\\"default\\\":\\\"\\\"},{\\\"name\\\":\\\"department\\\",\\\"type\\\":{\\\"type\\\":\\\"int\\\",\\\"connect.default\\\":0},\\\"default\\\":0},{\\\"name\\\":\\\"long_description\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"date_created\\\",\\\"type\\\":{\\\"type\\\":\\\"long\\\",\\\"connect.version\\\":1,\\\"connect.default\\\":1577894400000,\\\"connect.name\\\":\\\"io.debezium.time.Timestamp\\\"},\\\"default\\\":1577894400000},{\\\"name\\\":\\\"date_modified\\\",\\\"type\\\":{\\\"type\\\":\\\"string\\\",\\\"connect.version\\\":1,\\\"connect.default\\\":\\\"1970-01-01T00:00:00Z\\\",\\\"connect.name\\\":\\\"io.debezium.time.ZonedTimestamp\\\"},\\\"default\\\":\\\"1970-01-01T00:00:00Z\\\"}],\\\"connect.name\\\":\\\"estreams64.ecommerce.product_enriched.Value\\\"}\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{confluent-schemaregistry-host}}:8081/subjects/estreams64.ecommerce.sample-value",
+							"protocol": "http",
+							"host": [
+								"{{confluent-schemaregistry-host}}"
+							],
+							"port": "8081",
+							"path": [
+								"subjects",
+								"estreams64.ecommerce.sample-value"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REMOVE SAMPLE SCHEMA (PERMANENT)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"schema\": \"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"Value\\\",\\\"namespace\\\":\\\"estreams64.ecommerce.product_enriched\\\",\\\"fields\\\":[{\\\"name\\\":\\\"product_id\\\",\\\"type\\\":{\\\"type\\\":\\\"int\\\",\\\"connect.default\\\":0},\\\"default\\\":0},{\\\"name\\\":\\\"name\\\",\\\"type\\\":{\\\"type\\\":\\\"string\\\",\\\"connect.default\\\":\\\"\\\"},\\\"default\\\":\\\"\\\"},{\\\"name\\\":\\\"department\\\",\\\"type\\\":{\\\"type\\\":\\\"int\\\",\\\"connect.default\\\":0},\\\"default\\\":0},{\\\"name\\\":\\\"long_description\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"date_created\\\",\\\"type\\\":{\\\"type\\\":\\\"long\\\",\\\"connect.version\\\":1,\\\"connect.default\\\":1577894400000,\\\"connect.name\\\":\\\"io.debezium.time.Timestamp\\\"},\\\"default\\\":1577894400000},{\\\"name\\\":\\\"date_modified\\\",\\\"type\\\":{\\\"type\\\":\\\"string\\\",\\\"connect.version\\\":1,\\\"connect.default\\\":\\\"1970-01-01T00:00:00Z\\\",\\\"connect.name\\\":\\\"io.debezium.time.ZonedTimestamp\\\"},\\\"default\\\":\\\"1970-01-01T00:00:00Z\\\"}],\\\"connect.name\\\":\\\"estreams64.ecommerce.product_enriched.Value\\\"}\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{confluent-schemaregistry-host}}:8081/subjects/estreams64.ecommerce.sample-value?permanent=true",
+							"protocol": "http",
+							"host": [
+								"{{confluent-schemaregistry-host}}"
+							],
+							"port": "8081",
+							"path": [
+								"subjects",
+								"estreams64.ecommerce.sample-value"
+							],
+							"query": [
+								{
+									"key": "permanent",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE SAMPLE SCHEMA",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"schema\": \"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"Value\\\",\\\"namespace\\\":\\\"estreams64.ecommerce.sample\\\",\\\"fields\\\":[{\\\"name\\\":\\\"product_id\\\",\\\"type\\\":{\\\"type\\\":\\\"int\\\",\\\"connect.default\\\":0},\\\"default\\\":0},{\\\"name\\\":\\\"name\\\",\\\"type\\\":{\\\"type\\\":\\\"string\\\",\\\"connect.default\\\":\\\"\\\"},\\\"default\\\":\\\"\\\"},{\\\"name\\\":\\\"department\\\",\\\"type\\\":{\\\"type\\\":\\\"int\\\",\\\"connect.default\\\":0},\\\"default\\\":0},{\\\"name\\\":\\\"long_description\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"date_created\\\",\\\"type\\\":{\\\"type\\\":\\\"long\\\",\\\"connect.version\\\":1,\\\"connect.default\\\":1577894400000,\\\"connect.name\\\":\\\"io.debezium.time.Timestamp\\\"},\\\"default\\\":1577894400000},{\\\"name\\\":\\\"date_modified\\\",\\\"type\\\":{\\\"type\\\":\\\"string\\\",\\\"connect.version\\\":1,\\\"connect.default\\\":\\\"1970-01-01T00:00:00Z\\\",\\\"connect.name\\\":\\\"io.debezium.time.ZonedTimestamp\\\"},\\\"default\\\":\\\"1970-01-01T00:00:00Z\\\"}],\\\"connect.name\\\":\\\"estreams64.ecommerce.sample.Value\\\"}\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{confluent-schemaregistry-host}}:8081/subjects/estreams64.ecommerce.sample-value/versions",
+							"protocol": "http",
+							"host": [
+								"{{confluent-schemaregistry-host}}"
+							],
+							"port": "8081",
+							"path": [
+								"subjects",
+								"estreams64.ecommerce.sample-value",
+								"versions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RETRIEVE SAMPLE SCHEMA",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"schema\": \"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"Value\\\",\\\"namespace\\\":\\\"estreams64.ecommerce.sample\\\",\\\"fields\\\":[{\\\"name\\\":\\\"product_id\\\",\\\"type\\\":{\\\"type\\\":\\\"int\\\",\\\"connect.default\\\":0},\\\"default\\\":0},{\\\"name\\\":\\\"name\\\",\\\"type\\\":{\\\"type\\\":\\\"string\\\",\\\"connect.default\\\":\\\"\\\"},\\\"default\\\":\\\"\\\"},{\\\"name\\\":\\\"department\\\",\\\"type\\\":{\\\"type\\\":\\\"int\\\",\\\"connect.default\\\":0},\\\"default\\\":0},{\\\"name\\\":\\\"long_description\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"date_created\\\",\\\"type\\\":{\\\"type\\\":\\\"long\\\",\\\"connect.version\\\":1,\\\"connect.default\\\":1577894400000,\\\"connect.name\\\":\\\"io.debezium.time.Timestamp\\\"},\\\"default\\\":1577894400000},{\\\"name\\\":\\\"date_modified\\\",\\\"type\\\":{\\\"type\\\":\\\"string\\\",\\\"connect.version\\\":1,\\\"connect.default\\\":\\\"1970-01-01T00:00:00Z\\\",\\\"connect.name\\\":\\\"io.debezium.time.ZonedTimestamp\\\"},\\\"default\\\":\\\"1970-01-01T00:00:00Z\\\"}],\\\"connect.name\\\":\\\"estreams64.ecommerce.sample.Value\\\"}\"\r\n}"
+						},
+						"url": {
+							"raw": "http://{{confluent-schemaregistry-host}}:8081/subjects/estreams64.ecommerce.sample-value/versions",
+							"protocol": "http",
+							"host": [
+								"{{confluent-schemaregistry-host}}"
+							],
+							"port": "8081",
+							"path": [
+								"subjects",
+								"estreams64.ecommerce.sample-value",
+								"versions"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "da2af901-ef40-4316-a091-4d898774a5e6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "ffba4f7f-667c-4c36-8360-c2502b13a0cd",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "5a4b9498-9622-41d7-b930-374e3820deef",
+			"key": "elasticsearch-host",
+			"value": "elasticsearch-external.default.svc.cluster.local"
+		},
+		{
+			"id": "99151a31-91b7-4a2e-8c7f-28d2e3662f60",
+			"key": "kibana-host",
+			"value": "kibana-external.default.svc.cluster.local"
+		},
+		{
+			"id": "3bc590a5-fff0-4ef8-9a74-09615d312080",
+			"key": "neo4j-host",
+			"value": "neo4j-external.default.svc.cluster.local"
+		},
+		{
+			"id": "fc60e0a4-67ab-48fa-b2f7-ddf380c33e82",
+			"key": "kafka-connect-host",
+			"value": "connect-external.river.svc.cluster.local"
+		},
+		{
+			"id": "688ed600-b8f0-45c6-a12e-e8c4e74cb3bc",
+			"key": "ksqldbserver-host",
+			"value": "ksqldbserver-external.river.svc.cluster.local"
+		},
+		{
+			"id": "1c79147f-6100-4fa8-af56-3c5402aef00d",
+			"key": "kafka-restproxy-host",
+			"value": "restproxy-external.river.svc.cluster.local"
+		},
+		{
+			"id": "670f9c30-9165-40e7-9fba-67598908be17",
+			"key": "confluent-schemaregistry-host",
+			"value": "schemaregistry-external.river.svc.cluster.local"
+		},
+		{
+			"id": "0b95b1fe-084d-42ee-8cf4-e7eb1576c4b8",
+			"key": "zookeeper-host",
+			"value": "zookeeper1-external.river.svc.cluster.local"
+		},
+		{
+			"id": "fb3e33a2-21ff-48d0-8bbf-05ff9b19576b",
+			"key": "elastic-username",
+			"value": "a"
+		},
+		{
+			"id": "7b240ba1-0161-44cc-9db1-1ef0d3b3891f",
+			"key": "elastic-password",
+			"value": "a"
+		},
+		{
+			"id": "31a51ce1-ef15-4fd8-806c-1504ed69a15a",
+			"key": "elastic-protocol",
+			"value": "http"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
