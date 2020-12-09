@@ -20,13 +20,18 @@ SELECT User,Host,Password FROM mysql.user;
 DELETE FROM mysql.user WHERE LENGTH(User) = 0 OR LENGTH(Password) = 0;
 
 --- Set up Database for storing application data
+DROP DATABASE IF EXISTS ecommerce;
 CREATE DATABASE ecommerce DEFAULT CHARACTER SET utf8;
+
+DROP DATABASE IF EXISTS inventory;
+CREATE DATABASE inventory DEFAULT CHARACTER SET utf8;
 
 -- Creates the application user
 CREATE USER 'application'@'%' IDENTIFIED BY 'db3k4Cc';
 
 -- Grants privilges to the application user for the ecommerce database
 GRANT ALL PRIVILEGES ON ecommerce.* TO 'application'@'%';
+GRANT ALL PRIVILEGES ON inventory.* TO 'application'@'%';
 
 -- Flush privilleges
 FLUSH PRIVILEGES;
@@ -38,3 +43,6 @@ CREATE USER 'debezium'@'%' IDENTIFIED BY 'db3k4Cc';
 GRANT SELECT, RELOAD, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'debezium'@'%' IDENTIFIED BY 'db3k4Cc';
 
 FLUSH PRIVILEGES;
+
+SHOW GRANTS FOR 'debezium'@'%';
+SHOW GRANTS FOR 'application'@'%';
