@@ -26,6 +26,8 @@ INSERT INTO `customers` (customer_id, first_name, last_name, email, date_created
 (811, 'Sabestien', 'Lok', 'lok@example.org', NOW()),
 (821, 'Nancy', 'Pettite', 'n.pettite@example.org', NOW());
  
+TRUNCATE TABLE customer_addresses;
+
 INSERT INTO `customer_addresses` (customer_id, `latitude`, `longitude`,  `country`, `street`, `city`, `state`, `postalcode`, `date_created`) VALUES
 (599, 21.3030, -157.8514, 'USA', '818 S King St', 'Honolulu', 'HI', '96813', NOW()),
 (601, 21.2892, -157.7933, 'USA', '3919 Sierra Drive', 'Honolulu', 'HI', '96816', NOW()),
@@ -34,8 +36,8 @@ INSERT INTO `customer_addresses` (customer_id, `latitude`, `longitude`,  `countr
 (617, 47.1507, -119.9074, 'USA', '4380 S Macadam Ave', 'Portland', 'OR', '97239', NOW()),
  
 (619, 25.7617, 80.1918, 'USA', '98754 Main Street', 'Miami', 'FL', '33179', NOW()),
-(631, 34.0522, 118.2437, 'USA', '12345 Garden Avenue', 'Los Angeles', 'CA', '90010', NOW()),
-(641, 40.7128, 118.2437, 'USA', '12345 Mountain Circle', 'New York', 'NY', '10010', NOW()),
+(631, 34.1464, -118.3032, 'USA', '12345 Garden Avenue', 'Los Angeles', 'CA', '90010', NOW()),
+(641, 40.7497, -73.9667, 'USA', '6543 Mountain Plaza', 'New York', 'NY', '10010', NOW()),
 (643, 47.6062, 122.3321, 'USA', '90915 Main Circle', 'Seattle', 'WA', '98190', NOW()),
 (647, 41.8781, 87.6298, 'USA', '8773 Lake Michigan Blvd', 'Chicago', 'IL', '60640', NOW()),
 
