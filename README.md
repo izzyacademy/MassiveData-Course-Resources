@@ -9,12 +9,20 @@ I will share the links below to those repositories:
 
 ## Additional Resources and Repositories
 
+- [Infrastructure Setup Resources](https://github.com/izzyacademy/MassiveData-Course-Resources/tree/main/Infrastructure)
+- [Data Sets](https://github.com/izzyacademy/MassiveData-Course-Resources/tree/main/DataSets)
+- [Tools and Integrated Development Environment Setup](https://github.com/izzyacademy/MassiveData-Course-Resources/tree/main/Notes)
+- [Postman Collections](https://github.com/izzyacademy/MassiveData-Course-Resources/tree/main/Postman)
+- [Local DNS and Environment Variables](https://github.com/izzyacademy/MassiveData-Course-Resources/tree/main/Scripts)
 - [Data Generators](https://github.com/izzyacademy/DataGenerators)
 - [Apache Spark Data Batch Analysis](https://github.com/izzyacademy/SparkAnalysis)
 - [Kafka Streams Real Time Streams Data Analysis](https://github.com/izzyacademy/KafkaStreams)
 - [KSQL Data Analysis](https://github.com/izzyacademy/KSQL-Realtime-Streams)
 - [Sales Data Web REST API](https://github.com/izzyacademy/SalesAPI)
 - [Angular App for D3.js Visualization](https://github.com/izzyacademy/SalesWebApp)
+
+### Infrastructure, Data Sets, Tools, Postman Collections and Local DNS
+In this current repository, there are instructions for configuring the environment, loading up the sample datasets, installing your IDE, sample Postman collections for interacting with REST endpoints and a utility script for configuring your local DNS.
 
 ### Data Generators
 [The repository](https://github.com/izzyacademy/DataGenerators) contains a set of micro services that simulates realtime purchase orders for customers of an online grocery store.
